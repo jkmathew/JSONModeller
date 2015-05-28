@@ -8,10 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		4ABA93B91B17593000AE844A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA93B81B17593000AE844A /* AppDelegate.swift */; };
-		4ABA93BB1B17593000AE844A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA93BA1B17593000AE844A /* ViewController.swift */; };
 		4ABA93BD1B17593000AE844A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4ABA93BC1B17593000AE844A /* Images.xcassets */; };
 		4ABA93C01B17593000AE844A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4ABA93BE1B17593000AE844A /* Main.storyboard */; };
 		4ABA93CC1B17593100AE844A /* JSONModellerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA93CB1B17593100AE844A /* JSONModellerTests.swift */; };
+		4ABA93DB1B175A0700AE844A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA93DA1B175A0700AE844A /* Constants.swift */; };
+		4ABA93DD1B175A6900AE844A /* SaveAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA93DC1B175A6900AE844A /* SaveAccessoryView.swift */; };
+		4ABA93DF1B175A7800AE844A /* DraggDroppTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA93DE1B175A7800AE844A /* DraggDroppTextView.swift */; };
+		4ABA93E21B175A9600AE844A /* JSONEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA93E11B175A9600AE844A /* JSONEditViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,12 +31,15 @@
 		4ABA93B31B17593000AE844A /* JSONModeller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSONModeller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ABA93B71B17593000AE844A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4ABA93B81B17593000AE844A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4ABA93BA1B17593000AE844A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4ABA93BC1B17593000AE844A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4ABA93BF1B17593000AE844A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4ABA93C51B17593100AE844A /* JSONModellerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSONModellerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4ABA93CA1B17593100AE844A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4ABA93CB1B17593100AE844A /* JSONModellerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONModellerTests.swift; sourceTree = "<group>"; };
+		4ABA93DA1B175A0700AE844A /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		4ABA93DC1B175A6900AE844A /* SaveAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveAccessoryView.swift; sourceTree = "<group>"; };
+		4ABA93DE1B175A7800AE844A /* DraggDroppTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggDroppTextView.swift; sourceTree = "<group>"; };
+		4ABA93E11B175A9600AE844A /* JSONEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONEditViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,9 +82,12 @@
 			isa = PBXGroup;
 			children = (
 				4ABA93B81B17593000AE844A /* AppDelegate.swift */,
-				4ABA93BA1B17593000AE844A /* ViewController.swift */,
 				4ABA93BC1B17593000AE844A /* Images.xcassets */,
 				4ABA93BE1B17593000AE844A /* Main.storyboard */,
+				4ABA93D91B1759E800AE844A /* Extensions */,
+				4ABA93D81B1759DB00AE844A /* Controllers */,
+				4ABA93D71B1759D100AE844A /* View */,
+				4ABA93D51B1759A800AE844A /* Model */,
 				4ABA93B61B17593000AE844A /* Supporting Files */,
 			);
 			path = JSONModeller;
@@ -107,6 +116,46 @@
 				4ABA93CA1B17593100AE844A /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4ABA93D51B1759A800AE844A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4ABA93DA1B175A0700AE844A /* Constants.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4ABA93D71B1759D100AE844A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4ABA93DC1B175A6900AE844A /* SaveAccessoryView.swift */,
+				4ABA93DE1B175A7800AE844A /* DraggDroppTextView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4ABA93D81B1759DB00AE844A /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				4ABA93E01B175A9600AE844A /* JSONEditViewController */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		4ABA93D91B1759E800AE844A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4ABA93E01B175A9600AE844A /* JSONEditViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4ABA93E11B175A9600AE844A /* JSONEditViewController.swift */,
+			);
+			path = JSONEditViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,8 +257,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4ABA93BB1B17593000AE844A /* ViewController.swift in Sources */,
+				4ABA93DD1B175A6900AE844A /* SaveAccessoryView.swift in Sources */,
+				4ABA93DF1B175A7800AE844A /* DraggDroppTextView.swift in Sources */,
 				4ABA93B91B17593000AE844A /* AppDelegate.swift in Sources */,
+				4ABA93E21B175A9600AE844A /* JSONEditViewController.swift in Sources */,
+				4ABA93DB1B175A0700AE844A /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
