@@ -15,6 +15,9 @@
 		4ABA93DD1B175A6900AE844A /* SaveAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA93DC1B175A6900AE844A /* SaveAccessoryView.swift */; };
 		4ABA93DF1B175A7800AE844A /* DraggDroppTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA93DE1B175A7800AE844A /* DraggDroppTextView.swift */; };
 		4ABA93E21B175A9600AE844A /* JSONEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA93E11B175A9600AE844A /* JSONEditViewController.swift */; };
+		4ABA93E41B1781B600AE844A /* NSMutableString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA93E31B1781B600AE844A /* NSMutableString+Extension.swift */; };
+		4ABA93E81B1781CD00AE844A /* h.filetemplate in Resources */ = {isa = PBXBuildFile; fileRef = 4ABA93E61B1781CD00AE844A /* h.filetemplate */; };
+		4ABA93E91B1781CD00AE844A /* m.filetemplate in Resources */ = {isa = PBXBuildFile; fileRef = 4ABA93E71B1781CD00AE844A /* m.filetemplate */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +43,9 @@
 		4ABA93DC1B175A6900AE844A /* SaveAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveAccessoryView.swift; sourceTree = "<group>"; };
 		4ABA93DE1B175A7800AE844A /* DraggDroppTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggDroppTextView.swift; sourceTree = "<group>"; };
 		4ABA93E11B175A9600AE844A /* JSONEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONEditViewController.swift; sourceTree = "<group>"; };
+		4ABA93E31B1781B600AE844A /* NSMutableString+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSMutableString+Extension.swift"; sourceTree = "<group>"; };
+		4ABA93E61B1781CD00AE844A /* h.filetemplate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = h.filetemplate; sourceTree = "<group>"; };
+		4ABA93E71B1781CD00AE844A /* m.filetemplate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = m.filetemplate; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +102,7 @@
 		4ABA93B61B17593000AE844A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4ABA93E51B1781CD00AE844A /* Templates */,
 				4ABA93B71B17593000AE844A /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -146,6 +153,7 @@
 		4ABA93D91B1759E800AE844A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				4ABA93E31B1781B600AE844A /* NSMutableString+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -156,6 +164,15 @@
 				4ABA93E11B175A9600AE844A /* JSONEditViewController.swift */,
 			);
 			path = JSONEditViewController;
+			sourceTree = "<group>";
+		};
+		4ABA93E51B1781CD00AE844A /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				4ABA93E61B1781CD00AE844A /* h.filetemplate */,
+				4ABA93E71B1781CD00AE844A /* m.filetemplate */,
+			);
+			path = Templates;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -239,7 +256,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4ABA93BD1B17593000AE844A /* Images.xcassets in Resources */,
+				4ABA93E91B1781CD00AE844A /* m.filetemplate in Resources */,
 				4ABA93C01B17593000AE844A /* Main.storyboard in Resources */,
+				4ABA93E81B1781CD00AE844A /* h.filetemplate in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,6 +278,7 @@
 			files = (
 				4ABA93DD1B175A6900AE844A /* SaveAccessoryView.swift in Sources */,
 				4ABA93DF1B175A7800AE844A /* DraggDroppTextView.swift in Sources */,
+				4ABA93E41B1781B600AE844A /* NSMutableString+Extension.swift in Sources */,
 				4ABA93B91B17593000AE844A /* AppDelegate.swift in Sources */,
 				4ABA93E21B175A9600AE844A /* JSONEditViewController.swift in Sources */,
 				4ABA93DB1B175A0700AE844A /* Constants.swift in Sources */,

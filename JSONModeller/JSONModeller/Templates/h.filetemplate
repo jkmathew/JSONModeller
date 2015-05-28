@@ -1,0 +1,16 @@
+//
+//  [#ClassName#].h
+//  JSON Modeller
+//
+//  Created by [#AuthorName#] on [#CreatedDate#].
+//  Copyright (c) [#CopyrightYear#] [#CompanyName#]. All rights reserved.
+//
+//  Creaated with JSON Modeller
+
+#import "JSONModel.h"
+
+[#ForwardDeclarations#]
+
+@interface [#ClassName#] : JSONModel
+[#PropertyDeclarations#]
+@end

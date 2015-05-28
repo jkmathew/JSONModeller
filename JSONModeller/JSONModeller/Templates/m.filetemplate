@@ -1,0 +1,22 @@
+//
+//  [#ClassName#].m
+//  JSON Modeller
+//
+//  Created by [#AuthorName#] on [#CreatedDate#].
+//  Copyright (c) [#CopyrightYear#] [#CompanyName#]. All rights reserved.
+//
+//  Creaated with JSON Modeller
+
+#import "[#ClassName#].h"
+
+[#Imports#]
+
+@interface [#ClassName#] ()
+@end
+
+@implementation [#ClassName#]
+
+
+
+@end
+
