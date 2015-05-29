@@ -48,6 +48,7 @@
 		4ABA93E61B1781CD00AE844A /* h.filetemplate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = h.filetemplate; sourceTree = "<group>"; };
 		4ABA93E71B1781CD00AE844A /* m.filetemplate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = m.filetemplate; sourceTree = "<group>"; };
 		4ABA93EA1B17822B00AE844A /* ClassWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassWriter.swift; sourceTree = "<group>"; };
+		4ABA93EC1B18087300AE844A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +72,7 @@
 		4ABA93AA1B17593000AE844A = {
 			isa = PBXGroup;
 			children = (
+				4ABA93EC1B18087300AE844A /* README.md */,
 				4ABA93B51B17593000AE844A /* JSONModeller */,
 				4ABA93C81B17593100AE844A /* JSONModellerTests */,
 				4ABA93B41B17593000AE844A /* Products */,
@@ -476,6 +478,7 @@
 				4ABA93D11B17593100AE844A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4ABA93D21B17593100AE844A /* Build configuration list for PBXNativeTarget "JSONModellerTests" */ = {
 			isa = XCConfigurationList;
@@ -484,6 +487,7 @@
 				4ABA93D41B17593100AE844A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
