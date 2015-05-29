@@ -18,6 +18,7 @@
 		4ABA93E41B1781B600AE844A /* NSMutableString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA93E31B1781B600AE844A /* NSMutableString+Extension.swift */; };
 		4ABA93E81B1781CD00AE844A /* h.filetemplate in Resources */ = {isa = PBXBuildFile; fileRef = 4ABA93E61B1781CD00AE844A /* h.filetemplate */; };
 		4ABA93E91B1781CD00AE844A /* m.filetemplate in Resources */ = {isa = PBXBuildFile; fileRef = 4ABA93E71B1781CD00AE844A /* m.filetemplate */; };
+		4ABA93EB1B17822B00AE844A /* ClassWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA93EA1B17822B00AE844A /* ClassWriter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		4ABA93E31B1781B600AE844A /* NSMutableString+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSMutableString+Extension.swift"; sourceTree = "<group>"; };
 		4ABA93E61B1781CD00AE844A /* h.filetemplate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = h.filetemplate; sourceTree = "<group>"; };
 		4ABA93E71B1781CD00AE844A /* m.filetemplate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = m.filetemplate; sourceTree = "<group>"; };
+		4ABA93EA1B17822B00AE844A /* ClassWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassWriter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				4ABA93DA1B175A0700AE844A /* Constants.swift */,
+				4ABA93EA1B17822B00AE844A /* ClassWriter.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 			files = (
 				4ABA93DD1B175A6900AE844A /* SaveAccessoryView.swift in Sources */,
 				4ABA93DF1B175A7800AE844A /* DraggDroppTextView.swift in Sources */,
+				4ABA93EB1B17822B00AE844A /* ClassWriter.swift in Sources */,
 				4ABA93E41B1781B600AE844A /* NSMutableString+Extension.swift in Sources */,
 				4ABA93B91B17593000AE844A /* AppDelegate.swift in Sources */,
 				4ABA93E21B175A9600AE844A /* JSONEditViewController.swift in Sources */,

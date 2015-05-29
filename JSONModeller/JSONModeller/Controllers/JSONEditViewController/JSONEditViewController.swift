@@ -35,6 +35,18 @@ class JSONEditViewController: NSViewController {
     
     func createFilesFilesFor(writingClassName:String, classPrefix:String, useCoreData:Bool, path:String) {
         println(path)
-       
+        if let jsonString = jsonTextView.string where count(jsonString) > 0 {
+            
+            var data: NSData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)!
+            var error: NSError?
+            
+            let anyObj: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0),
+                error: &error)
+            println("Error: \(error)")
+            
+            let writer = ClassWriter(writingClassName: writingClassName, forData: anyObj as! NSDictionary)
+            
+            writer.writeFiles(path)
+        }
     }
 }
