@@ -47,6 +47,9 @@ class JSONEditViewController: NSViewController {
             let writer = ClassWriter(writingClassName: writingClassName, forData: anyObj as! NSDictionary)
             
             writer.writeFiles(path)
+            
+            let url = NSURL(fileURLWithPath: path, isDirectory: true)
+            NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([url!])
         }
     }
 }

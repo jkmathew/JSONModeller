@@ -19,6 +19,7 @@
 		4ABA93E81B1781CD00AE844A /* h.filetemplate in Resources */ = {isa = PBXBuildFile; fileRef = 4ABA93E61B1781CD00AE844A /* h.filetemplate */; };
 		4ABA93E91B1781CD00AE844A /* m.filetemplate in Resources */ = {isa = PBXBuildFile; fileRef = 4ABA93E71B1781CD00AE844A /* m.filetemplate */; };
 		4ABA93EB1B17822B00AE844A /* ClassWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA93EA1B17822B00AE844A /* ClassWriter.swift */; };
+		4ABA93EE1B19FA2F00AE844A /* PropertyCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA93ED1B19FA2F00AE844A /* PropertyCreator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		4ABA93E71B1781CD00AE844A /* m.filetemplate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = m.filetemplate; sourceTree = "<group>"; };
 		4ABA93EA1B17822B00AE844A /* ClassWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassWriter.swift; sourceTree = "<group>"; };
 		4ABA93EC1B18087300AE844A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4ABA93ED1B19FA2F00AE844A /* PropertyCreator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyCreator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +136,7 @@
 			children = (
 				4ABA93DA1B175A0700AE844A /* Constants.swift */,
 				4ABA93EA1B17822B00AE844A /* ClassWriter.swift */,
+				4ABA93ED1B19FA2F00AE844A /* PropertyCreator.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 				4ABA93EB1B17822B00AE844A /* ClassWriter.swift in Sources */,
 				4ABA93E41B1781B600AE844A /* NSMutableString+Extension.swift in Sources */,
 				4ABA93B91B17593000AE844A /* AppDelegate.swift in Sources */,
+				4ABA93EE1B19FA2F00AE844A /* PropertyCreator.swift in Sources */,
 				4ABA93E21B175A9600AE844A /* JSONEditViewController.swift in Sources */,
 				4ABA93DB1B175A0700AE844A /* Constants.swift in Sources */,
 			);

@@ -20,6 +20,7 @@ class ClassWriter: NSObject {
     var writingClassPrefix: String
     var writingClassData: NSDictionary
     
+    var usePrimitiveTypes = true
 
     
     override class func initialize () {
@@ -33,22 +34,30 @@ class ClassWriter: NSObject {
         self.writingClassData = forData
     }
     
-    func writeFiles(toPath:String) {
-        let hFile = self.templateFor(Filetype.ObjectiveC_H)
+    
+    func writeFiles(directory:String) {
+        let hFileContents = self.templateFor(Filetype.ObjectiveC_H)
 
-        let mFile = self.templateFor(Filetype.ObjectiveC_M)
+        let mFileContents = self.templateFor(Filetype.ObjectiveC_M)
         
+        let creator = PropertyCreator()
+        creator.usePrimitiveTypes = self.usePrimitiveTypes
         for (key, value) in self.writingClassData {
-            println("key: \"\(key )\"")
-            println("value: \"\(value )\"")
+          creator.propertyDeclarationFor(key as! String, value: value)
         }
        
-        let hFilePath = self.filePathFor(Filetype.ObjectiveC_H, toPath: toPath)
-        hFile.writeToFile(hFilePath, atomically: true, encoding: NSUTF8StringEncoding, error: nil)
+        self.writeContents(hFileContents, inFolder: directory, withType: Filetype.ObjectiveC_H)
+        self.writeContents(mFileContents, inFolder: directory, withType: Filetype.ObjectiveC_M)
+        
     }
     
-    func templateFor(fileType: Filetype) -> NSMutableString {
-        let path = NSBundle.mainBundle().pathForResource(fileType.rawValue, ofType: "filetemplate")
+    func writeContents(fileContents: NSMutableString, inFolder pathToFilder:String, withType type: Filetype) {
+        let filePath = self.pathFor(type, inFolder: pathToFilder)
+        fileContents.writeToFile(filePath, atomically: true, encoding: NSUTF8StringEncoding, error: nil)
+    }
+    
+    func templateFor(type: Filetype) -> NSMutableString {
+        let path = NSBundle.mainBundle().pathForResource(type.rawValue, ofType: "filetemplate")
         let fileContents = NSMutableString(contentsOfFile: path!)
         
         let createdOnDateString = NSDateFormatter.localizedStringFromDate(NSDate(), dateStyle: NSDateFormatterStyle.ShortStyle, timeStyle: NSDateFormatterStyle.NoStyle)
@@ -68,13 +77,15 @@ class ClassWriter: NSObject {
         return fileContents!
     }
     
-    func filePathFor(fileType: Filetype, toPath:String) -> String {
+    func pathFor(type: Filetype, inFolder pathToFilder: String) -> String {
         let fullClassName = self.fullClassName()
-        let filePath = toPath + "/" + fullClassName + "." + fileType.rawValue
+        let filePath = pathToFilder.stringByAppendingPathComponent(fullClassName).stringByAppendingPathExtension(type.rawValue)
         println(filePath)
-        return filePath
+        return filePath!
     }
     
+    
+    //MARK: Getters
     func fullClassName() -> String {
         return self.writingClassPrefix + self.writingClassName
     }
