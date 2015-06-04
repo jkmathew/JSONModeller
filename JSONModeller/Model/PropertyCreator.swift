@@ -10,6 +10,8 @@ import Cocoa
 
 class PropertyCreator: NSObject {
     var usePrimitiveTypes = true
+   
+    let unwantedCharacters = NSCharacterSet(charactersInString: "0987654321abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ").invertedSet
 
     func propertyDeclarationFor(key: String, value: AnyObject) {
         println("key: \"\(key )\"")
@@ -19,19 +21,32 @@ class PropertyCreator: NSObject {
     }
     
     func propertyNameFrom(key: String) -> String {
-        let unwantedCharacters = NSCharacterSet(charactersInString: "0987654321abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ").invertedSet
-        let components = key.componentsSeparatedByCharactersInSet(unwantedCharacters)
-        
-        var propertyName = ""
-        if !components.isEmpty {
-            propertyName += components.first!.lowercaseString
 
-            for (var i = 1; i < components.count; i++) {
-                let component = components[i]
-                propertyName += component.capitalizedString
-            }
+        //Make each alphabet whith leading non alphabet to upercase
+        let capitalized = key.capitalizedString
+        
+        //Extracts only alphabets and digits
+        let components = capitalized.componentsSeparatedByCharactersInSet(unwantedCharacters)
+        let filteredComponents = components.filter {
+            return !$0.isEmpty
+        }
+        var propertyName = "".join(filteredComponents)
+
+        //if its empty just create a dummy
+        if propertyName.isEmpty {
+            propertyName = "_Item_"
+        }
+        //If starts with digit add _ to begining
+        else if propertyName.startsWithDigit() {
+            propertyName = "_" + propertyName
+        }
+        // Make first character lowercase
+        else {
+            let lowercaseBegining = propertyName.substring(to: 1).lowercaseString
+            propertyName = lowercaseBegining + propertyName.substring(from: 1)
         }
         
+
         return propertyName
     }
 }
