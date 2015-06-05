@@ -20,8 +20,6 @@ class ClassWriter: NSObject {
     var writingClassPrefix: String
     var writingClassData: NSDictionary
     
-    var usePrimitiveTypes = true
-
     
     override class func initialize () {
         dateFormatter.dateFormat = "yyyy"
@@ -40,10 +38,9 @@ class ClassWriter: NSObject {
 
         let mFileContents = self.templateFor(Filetype.ObjectiveC_M)
         
-        let creator = PropertyCreator()
-        creator.usePrimitiveTypes = self.usePrimitiveTypes
+        let creator = PropertyInfo()
         for (key, value) in self.writingClassData {
-          creator.propertyDeclarationFor(key as! String, value: value)
+            let creator = PropertyInfo(key: key as! String, value: value)
         }
        
         self.writeContents(hFileContents, inFolder: directory, withType: Filetype.ObjectiveC_H)

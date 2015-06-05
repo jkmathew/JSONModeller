@@ -1,5 +1,5 @@
 //
-//  PropertyCreator.swift
+//  PropertyInfo.swift
 //  JSONModeller
 //
 //  Created by Johnykutty Mathew on 30/05/15.
@@ -8,14 +8,27 @@
 
 import Cocoa
 
-class PropertyCreator: NSObject {
-    var usePrimitiveTypes = true
+class PropertyInfo: NSObject {
    
-    let unwantedCharacters = NSCharacterSet(charactersInString: "0987654321abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ").invertedSet
-
-    func propertyDeclarationFor(key: String, value: AnyObject) {
+    private static let unwantedCharacters = NSCharacterSet(charactersInString: "0987654321abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ").invertedSet
+    var type = "id"
+    var propertyName = ""
+    var isCustomClass = false
+    
+    var propertyDeclaration: String {
+        get {
+            return "@property (strong, nonatomic) UITableView *tableView;"
+        }
+    }
+    
+    override init() {
+        
+    }
+    
+    init(key: String, value: AnyObject) {
         println("key: \"\(key )\"")
         println("value: \"\(value )\"")
+
         println("value class_getName: \"\(String.fromCString(class_getName(value.classForCoder)) )\"")
         
     }
@@ -26,7 +39,7 @@ class PropertyCreator: NSObject {
         let capitalized = key.capitalizedString
         
         //Extracts only alphabets and digits
-        let components = capitalized.componentsSeparatedByCharactersInSet(unwantedCharacters)
+        let components = capitalized.componentsSeparatedByCharactersInSet(PropertyInfo.unwantedCharacters)
         let filteredComponents = components.filter {
             return !$0.isEmpty
         }

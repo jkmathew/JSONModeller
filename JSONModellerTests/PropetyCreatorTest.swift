@@ -23,7 +23,7 @@ class PropetyCreatorTest: XCTestCase {
     }
 
     func testRemoveSpecialCharacters() {
-        let creator = PropertyCreator()
+        let creator = PropertyInfo()
         let propertyName = "&&) This is @@a ()(test   %&&  property %123"
         let expectedResult = "thisIsATestProperty123"
         let actualResult = creator.propertyNameFrom(propertyName)
@@ -31,7 +31,7 @@ class PropetyCreatorTest: XCTestCase {
     }
 
     func testStartingWithDigit() {
-        let creator = PropertyCreator()
+        let creator = PropertyInfo()
         let propertyName = "123Property"
         let expectedResult = "_123Property"
         let actualResult = creator.propertyNameFrom(propertyName)
@@ -46,7 +46,7 @@ class PropetyCreatorTest: XCTestCase {
     }
     
     func testFull() {
-        let creator = PropertyCreator()
+        let creator = PropertyInfo()
         let propertyName = "8&&) this ??`is @@a68test     property %123"
         let expectedResult = "_8ThisIsA68TestProperty123"
         let actualResult = creator.propertyNameFrom(propertyName)
