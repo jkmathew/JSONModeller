@@ -29,6 +29,14 @@ class PropetyCreatorTest: XCTestCase {
         let actualResult = creator.propertyNameFrom(propertyName)
         XCTAssertEqual(expectedResult, actualResult, "remove special chars failed")
     }
+    
+    func testAlreadyCamelCased() {
+        let creator = PropertyInfo()
+        let propertyName = "&&) This is @@a ()(testProperty %123"
+        let expectedResult = "thisIsATestProperty123"
+        let actualResult = creator.propertyNameFrom(propertyName)
+        XCTAssertEqual(expectedResult, actualResult, "AlreadyCamelcased failed")
+    }
 
     func testStartingWithDigit() {
         let creator = PropertyInfo()
@@ -47,11 +55,52 @@ class PropetyCreatorTest: XCTestCase {
     
     func testFull() {
         let creator = PropertyInfo()
-        let propertyName = "8&&) this ??`is @@a68test     property %123"
+        let propertyName = "8&&) this ??`is  a68testProperty %123"
         let expectedResult = "_8ThisIsA68TestProperty123"
         let actualResult = creator.propertyNameFrom(propertyName)
         XCTAssertEqual(expectedResult, actualResult, "starting with digits test failed")
 
     }
-
+    
+    func _testNumberTypes() {
+        //just checking
+        let creator = PropertyInfo()
+        var number = NSNumber(bool: true)
+        var type = String.fromCString(number.objCType)!
+        print("bool ")
+        println(type)
+        number = NSNumber(booleanLiteral: true)
+        type = String.fromCString(number.objCType)!
+        print("booleanLiteral ")
+        println(type)
+        number = NSNumber(float: 1.1)
+        type = String.fromCString(number.objCType)!
+        print("float ")
+        println(type)
+        
+        number = NSNumber(floatLiteral: 1.1)
+        type = String.fromCString(number.objCType)!
+        print("floatLiteral ")
+        println(type)
+        
+        number = NSNumber(int: 1)
+        type = String.fromCString(number.objCType)!
+        print("int ")
+        println(type)
+        
+        number = NSNumber(integerLiteral: 2)
+        type = String.fromCString(number.objCType)!
+        print("integerLiteral ")
+        println(type)
+        
+        number = NSNumber(integer: 1)
+        type = String.fromCString(number.objCType)!
+        print("integer ")
+        println(type)
+        
+        number = NSNumber(longLong: 1000000000000000000)
+        type = String.fromCString(number.objCType)!
+        print("longLong ")
+        println(type)
+    }
 }

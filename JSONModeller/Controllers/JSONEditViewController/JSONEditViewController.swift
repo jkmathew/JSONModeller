@@ -21,6 +21,7 @@ class JSONEditViewController: NSViewController {
         
         let openPanel = NSOpenPanel()
         openPanel.canChooseDirectories = true
+        openPanel.canCreateDirectories = true
         openPanel.canChooseFiles = false
         openPanel.prompt = "Chose Directory"
         let saveAccessoryView = SaveAccessoryView(frame: NSMakeRect(0, 0, 300, 100))
@@ -44,12 +45,21 @@ class JSONEditViewController: NSViewController {
                 error: &error)
             println("Error: \(error)")
             
-            let writer = ClassWriter(writingClassName: writingClassName, forData: anyObj as! NSDictionary)
+            if let dict = anyObj as? NSDictionary {
+                let writer = ClassWriter(writingClassName: writingClassName, forData: dict)
+                
+                writer.writeFiles(path)
+            }
+            else {
+                //TODO: Handle array case later
+                println("Handle array case later")
+            }
             
-            writer.writeFiles(path)
-            
-            let url = NSURL(fileURLWithPath: path, isDirectory: true)
-            NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([url!])
+            let showFolder = NSTask()
+            showFolder.launchPath = "/usr/bin/open"
+            showFolder.arguments = [path]
+            showFolder.launch()
         }
     }
+    
 }

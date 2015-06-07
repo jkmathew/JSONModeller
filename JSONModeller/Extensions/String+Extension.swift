@@ -50,4 +50,10 @@ extension String {
         let end = from + length
         return self[from..<end]
     }
+    
+    func firstLetterLoweredString() -> String {
+        let lowercase = self.substring(to: 1).lowercaseString
+        let value = lowercase + self.substring(from: 1)
+        return value
+    }
 }

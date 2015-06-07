@@ -32,20 +32,35 @@ class ClassWriter: NSObject {
         self.writingClassData = forData
     }
     
-    
+    //MARK: File operations
     func writeFiles(directory:String) {
         let hFileContents = self.templateFor(Filetype.ObjectiveC_H)
 
         let mFileContents = self.templateFor(Filetype.ObjectiveC_M)
         
-        let creator = PropertyInfo()
+        var propertyDeclarations = ""
+        var forwardDeclarations = ""
+        var importStatements = ""
         for (key, value) in self.writingClassData {
-            let creator = PropertyInfo(key: key as! String, value: value)
+            let info = PropertyInfo(key: key as! String, value: value)
+            if info.isCustomClass {
+                forwardDeclarations += info.forwardClassDeclaration + "\n"
+                importStatements += info.importStatement + "\n"
+                
+                let writer = ClassWriter(writingClassName: info.type, forData: value as! NSDictionary)
+                writer.writeFiles(directory)
+            }
+            propertyDeclarations += info.propertyDeclaration + "\n"
         }
+        
+        mFileContents.replaceOccurrencesOfString(kImportsPlaceholder, withString: importStatements)
+        
+        hFileContents.replaceOccurrencesOfString(kForwardDeclarationsPlaceholder, withString: forwardDeclarations)
+        hFileContents.replaceOccurrencesOfString(kPropertyDeclarationsPlaceholder, withString: propertyDeclarations)
+
        
         self.writeContents(hFileContents, inFolder: directory, withType: Filetype.ObjectiveC_H)
         self.writeContents(mFileContents, inFolder: directory, withType: Filetype.ObjectiveC_M)
-        
     }
     
     func writeContents(fileContents: NSMutableString, inFolder pathToFilder:String, withType type: Filetype) {
