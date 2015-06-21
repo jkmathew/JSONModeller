@@ -17,6 +17,13 @@
 @implementation [#ClassName#]
 
 
++(JSONKeyMapper*)keyMapper
+{
+return [[JSONKeyMapper alloc] initWithDictionary:@{
+[#KeyMapper#]
+}];
+}
+
 
 @end
 

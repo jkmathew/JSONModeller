@@ -29,6 +29,16 @@ class PropertyInfo: NSObject {
         }
     }
     
+    var keyMapItem: String! {
+        get {
+            if self.originalJSONKey == self.propertyName {
+                return nil
+            }
+            let item = "@\"" + self.originalJSONKey + "\" : @\"" + self.propertyName + "\""
+            return item
+        }
+    }
+    
     var forwardClassDeclaration: String {
         get {
             return "@class " + self.type + ";"
@@ -45,13 +55,16 @@ class PropertyInfo: NSObject {
         
     }
     
-    init(key: String, value: AnyObject) {
+    init(key: String, value: AnyObject, owner: String?) {
         super.init()
         self.originalJSONKey = key
         println("\n\n\n\nkey: \"\(key )\"")
         println("value: \"\(value )\"")
         println("value class_getName: \"\(String.fromCString(class_getName(value.classForCoder)) )\" ")
         
+        if let ownerName = owner {
+            self.ownerClass = ownerName
+        }
         self.propertyName = self.propertyNameFrom(key)
         if value.isKindOfClass(NSDictionary) {
             self.isCustomClass = true
@@ -82,6 +95,10 @@ class PropertyInfo: NSObject {
             else {
                 propertyName = self.ownerClass.firstLetterLoweredString() + "Description"
             }
+        }
+        // If the propertyname is id make it to classID format
+        else if propertyName.lowercaseString == "id" {
+            propertyName = self.ownerClass.firstLetterLoweredString() + "ID"
         }
         // If starts with digit or property name is any property of NSObject adding a leading _(underscore)
         else if propertyName.startsWithDigit() || NSObject.instancesRespondToSelector(Selector(propertyName)) {

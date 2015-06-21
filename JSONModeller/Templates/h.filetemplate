@@ -8,9 +8,7 @@
 //  Creaated with JSON Modeller
 
 #import "JSONModel.h"
-
 [#ForwardDeclarations#]
-
 @interface [#ClassName#] : JSONModel
 [#PropertyDeclarations#]
 @end

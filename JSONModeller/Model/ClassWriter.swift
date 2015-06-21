@@ -38,25 +38,30 @@ class ClassWriter: NSObject {
 
         let mFileContents = self.templateFor(Filetype.ObjectiveC_M)
         
-        var propertyDeclarations = ""
-        var forwardDeclarations = ""
-        var importStatements = ""
+        var propertyDeclarations = [String]()
+        var forwardDeclarations = [String]()
+        var importStatements = [String]()
+        var keyMap = [String]()
         for (key, value) in self.writingClassData {
-            let info = PropertyInfo(key: key as! String, value: value)
+            let info = PropertyInfo(key: key as! String, value: value, owner: self.writingClassName)
             if info.isCustomClass {
-                forwardDeclarations += info.forwardClassDeclaration + "\n"
-                importStatements += info.importStatement + "\n"
+                forwardDeclarations.append(info.forwardClassDeclaration)
+                importStatements.append(info.importStatement)
                 
                 let writer = ClassWriter(writingClassName: info.type, forData: value as! NSDictionary)
                 writer.writeFiles(directory)
             }
-            propertyDeclarations += info.propertyDeclaration + "\n"
+            if let map = info.keyMapItem {
+                keyMap.append(map)
+            }
+            propertyDeclarations.append(info.propertyDeclaration)
         }
         
-        mFileContents.replaceOccurrencesOfString(kImportsPlaceholder, withString: importStatements)
+        mFileContents.replaceOccurrencesOfString(kImportsPlaceholder, withString: "\n".join(importStatements))
+        mFileContents.replaceOccurrencesOfString(kKeymapperPlaceholder, withString: ",\n".join(keyMap))
         
-        hFileContents.replaceOccurrencesOfString(kForwardDeclarationsPlaceholder, withString: forwardDeclarations)
-        hFileContents.replaceOccurrencesOfString(kPropertyDeclarationsPlaceholder, withString: propertyDeclarations)
+        hFileContents.replaceOccurrencesOfString(kForwardDeclarationsPlaceholder, withString: "\n".join(forwardDeclarations))
+        hFileContents.replaceOccurrencesOfString(kPropertyDeclarationsPlaceholder, withString: "\n".join(propertyDeclarations))
 
        
         self.writeContents(hFileContents, inFolder: directory, withType: Filetype.ObjectiveC_H)

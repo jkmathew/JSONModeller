@@ -23,6 +23,9 @@ extension String {
     }
     
     func substring(range: NSRange) -> String {
+        if self.isEmpty {
+            return ""
+        }
         let from = range.location
         let end = range.location + range.length
         return self[from..<end]
@@ -30,6 +33,9 @@ extension String {
     
     subscript (r: Range<Int>) -> String {
         get {
+            if self.isEmpty {
+                return ""
+            }
             let subStart = advance(self.startIndex, r.startIndex, self.endIndex)
             let subEnd = advance(subStart, r.endIndex - r.startIndex, self.endIndex)
             return self.substringWithRange(Range(start: subStart, end: subEnd))
@@ -37,21 +43,33 @@ extension String {
     }
     
     func substring(#from: Int) -> String {
+        if self.isEmpty {
+            return ""
+        }
         let end = count(self)
         return self[from..<end]
     }
     
     func substring(#to: Int) -> String {
+        if self.isEmpty {
+            return ""
+        }
         let from = 0
         return self[from..<to]
     }
     
     func substring(from: Int, length: Int) -> String {
+        if self.isEmpty {
+            return ""
+        }
         let end = from + length
         return self[from..<end]
     }
     
     func firstLetterLoweredString() -> String {
+        if self.isEmpty {
+            return ""
+        }
         let lowercase = self.substring(to: 1).lowercaseString
         let value = lowercase + self.substring(from: 1)
         return value
