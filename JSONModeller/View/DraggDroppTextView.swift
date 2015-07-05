@@ -34,8 +34,8 @@ class DraggDroppTextView: NSTextView {
                     println(fiepath)
                     let fileExtension = fiepath.pathExtension
                     if fileExtension == "json"{
-                        let jsonText = String(contentsOfFile: fiepath, encoding: NSUTF8StringEncoding, error: nil)
-                        self.string = jsonText
+                        let jsonData = NSData(contentsOfFile: fiepath)
+                        self.setFormattedJsonWithData(jsonData)
                         return true
                     }
                 }
@@ -44,4 +44,26 @@ class DraggDroppTextView: NSTextView {
         return false
     }
     
+    func formatJson() -> NSError? {
+        let data = self.string?.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
+        return self.setFormattedJsonWithData(data)
+    }
+    
+    func setFormattedJsonWithData(data: NSData?) -> NSError? {
+        var error: NSError? = nil
+        if let validData = data {
+            let json: AnyObject? = NSJSONSerialization.JSONObjectWithData(validData, options: nil, error: &error)
+            if (error != nil) {
+                return error;
+            }
+            let formattedJSONData = NSJSONSerialization.dataWithJSONObject(json!, options: .PrettyPrinted, error: &error)
+            if (error != nil) {
+                return error;
+            }
+            let formattedJSONString = NSString(data: formattedJSONData!, encoding: NSUTF8StringEncoding)
+            self.string = formattedJSONString as? String
+            return error;
+        }
+        return nil
+    }
 }

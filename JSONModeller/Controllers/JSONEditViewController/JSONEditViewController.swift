@@ -10,11 +10,17 @@ import Cocoa
 
 class JSONEditViewController: NSViewController {
 
-    @IBOutlet var jsonTextView: NSTextView!
+    @IBOutlet var jsonTextView: DraggDroppTextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+    }
+    
+    @IBAction func formatJSON(sender: AnyObject) {
+        if let error = self.jsonTextView.formatJson() {
+            print(error)
+        }
     }
     
     @IBAction func generateFiles(sender: AnyObject) {
@@ -61,5 +67,6 @@ class JSONEditViewController: NSViewController {
             showFolder.launch()
         }
     }
+    
     
 }

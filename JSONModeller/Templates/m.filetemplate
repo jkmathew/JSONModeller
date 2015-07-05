@@ -8,14 +8,11 @@
 //  Creaated with JSON Modeller
 
 #import "[#ClassName#].h"
-
 [#Imports#]
-
 @interface [#ClassName#] ()
 @end
 
 @implementation [#ClassName#]
-
 
 +(JSONKeyMapper*)keyMapper
 {

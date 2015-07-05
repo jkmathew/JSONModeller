@@ -68,7 +68,7 @@ class PropertyInfo: NSObject {
         self.propertyName = self.propertyNameFrom(key)
         if value.isKindOfClass(NSDictionary) {
             self.isCustomClass = true
-            self.type = self.classPrefix + self.pascalCaseStringFrom(key)
+            self.type = self.classPrefix + self.pascalCaseStringFrom(key).capitalizedString
         }
         else if let number = value as? NSNumber where Settings.sharedInstance().usePrimitiveTypes{
             self.type = self.numberTypeFrom(number)

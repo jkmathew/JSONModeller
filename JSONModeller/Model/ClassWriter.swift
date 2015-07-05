@@ -57,15 +57,26 @@ class ClassWriter: NSObject {
             propertyDeclarations.append(info.propertyDeclaration)
         }
         
-        mFileContents.replaceOccurrencesOfString(kImportsPlaceholder, withString: "\n".join(importStatements))
-        mFileContents.replaceOccurrencesOfString(kKeymapperPlaceholder, withString: ",\n".join(keyMap))
+        let forwardDeclarationsString = self.replacementFor(forwardDeclarations, joiner: "\n")
+            hFileContents.replaceOccurrencesOfString(kForwardDeclarationsPlaceholder, withString: forwardDeclarationsString)
         
-        hFileContents.replaceOccurrencesOfString(kForwardDeclarationsPlaceholder, withString: "\n".join(forwardDeclarations))
-        hFileContents.replaceOccurrencesOfString(kPropertyDeclarationsPlaceholder, withString: "\n".join(propertyDeclarations))
+        let propertyDeclarationsString = self.replacementFor(propertyDeclarations, joiner: "\n")
+            hFileContents.replaceOccurrencesOfString(kPropertyDeclarationsPlaceholder, withString: propertyDeclarationsString)
 
+        let importStatementsString = self.replacementFor(importStatements, joiner: "\n")
+            mFileContents.replaceOccurrencesOfString(kImportsPlaceholder, withString: importStatementsString)
+        
+        let keyMapString = self.replacementFor(keyMap, joiner: ",\n")
+            mFileContents.replaceOccurrencesOfString(kKeymapperPlaceholder, withString: keyMapString)
+    
        
         self.writeContents(hFileContents, inFolder: directory, withType: Filetype.ObjectiveC_H)
         self.writeContents(mFileContents, inFolder: directory, withType: Filetype.ObjectiveC_M)
+    }
+    
+    func replacementFor(items: [String], joiner: String) -> String {
+        let replacementString = items.count > 0 ? "\n" + "\n".join(items) + "\n" : ""
+        return replacementString;
     }
     
     func writeContents(fileContents: NSMutableString, inFolder pathToFilder:String, withType type: Filetype) {
