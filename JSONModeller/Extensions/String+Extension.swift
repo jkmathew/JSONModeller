@@ -10,8 +10,8 @@ import Foundation
 
 extension String {
     func startsWithDigit() -> Bool {
-        let regex = NSRegularExpression(pattern: "^[0-9].*", options: nil, error: nil)!
-        if nil != regex.firstMatchInString(self, options: nil, range: self.range()) {
+        let regex = try! NSRegularExpression(pattern: "^[0-9].*", options: [])
+        if nil != regex.firstMatchInString(self, options: [], range: self.range()) {
             return true
             
         }
@@ -19,7 +19,7 @@ extension String {
     }
     
     func range() -> NSRange {
-        return NSMakeRange(0, count(self))
+        return NSMakeRange(0, self.characters.count)
     }
     
     func substring(range: NSRange) -> String {
@@ -36,21 +36,21 @@ extension String {
             if self.isEmpty {
                 return ""
             }
-            let subStart = advance(self.startIndex, r.startIndex, self.endIndex)
-            let subEnd = advance(subStart, r.endIndex - r.startIndex, self.endIndex)
+            let subStart = self.startIndex.advancedBy(r.startIndex, limit: self.endIndex)
+            let subEnd = subStart.advancedBy(r.endIndex - r.startIndex, limit: self.endIndex)
             return self.substringWithRange(Range(start: subStart, end: subEnd))
         }
     }
     
-    func substring(#from: Int) -> String {
+    func substring(from from: Int) -> String {
         if self.isEmpty {
             return ""
         }
-        let end = count(self)
+        let end = self.characters.count
         return self[from..<end]
     }
     
-    func substring(#to: Int) -> String {
+    func substring(to to: Int) -> String {
         if self.isEmpty {
             return ""
         }

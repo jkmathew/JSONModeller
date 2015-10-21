@@ -31,7 +31,7 @@ class Settings: NSObject {
     var usePrimitiveTypes = true
     
     private override init() {
-        println(__FUNCTION__)
+        print(__FUNCTION__)
     }
     
     required init(coder aDecoder: NSCoder) {

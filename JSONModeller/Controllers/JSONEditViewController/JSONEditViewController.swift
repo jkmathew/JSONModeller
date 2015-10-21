@@ -19,7 +19,7 @@ class JSONEditViewController: NSViewController {
     
     @IBAction func formatJSON(sender: AnyObject) {
         if let error = self.jsonTextView.formatJson() {
-            print(error)
+            print(error, terminator: "")
         }
     }
     
@@ -41,15 +41,20 @@ class JSONEditViewController: NSViewController {
     }
     
     func createFilesFilesFor(writingClassName:String, classPrefix:String, useCoreData:Bool, path:String) {
-        println(path)
-        if let jsonString = jsonTextView.string where count(jsonString) > 0 {
+        print(path)
+        if let jsonString = jsonTextView.string where jsonString.characters.count > 0 {
             
-            var data: NSData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)!
+            let data: NSData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)!
             var error: NSError?
             
-            let anyObj: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0),
-                error: &error)
-            println("Error: \(error)")
+            let anyObj: AnyObject?
+            do {
+                anyObj = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0))
+            } catch let error1 as NSError {
+                error = error1
+                anyObj = nil
+            }
+            print("Error: \(error)")
             
             if let dict = anyObj as? NSDictionary {
                 let writer = ClassWriter(writingClassName: writingClassName, forData: dict)
@@ -58,7 +63,7 @@ class JSONEditViewController: NSViewController {
             }
             else {
                 //TODO: Handle array case later
-                println("Handle array case later")
+                print("Handle array case later")
             }
             
             let showFolder = NSTask()

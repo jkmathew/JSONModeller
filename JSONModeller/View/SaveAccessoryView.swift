@@ -24,8 +24,8 @@ class SaveAccessoryView :  NSView {
        
          
         self.rootClassNameField = NSTextField(frame: NSMakeRect(117, 65, 150, 21))
-        (self.rootClassNameField.cell() as! NSTextFieldCell).placeholderString = "RootClass"
-        (self.rootClassNameField.cell() as! NSTextFieldCell).stringValue = ""
+        (self.rootClassNameField.cell as! NSTextFieldCell).placeholderString = "RootClass"
+        (self.rootClassNameField.cell as! NSTextFieldCell).stringValue = ""
 
         let rootClassLabel = NSTextField(frame: NSMakeRect(0, 67, 115, 17))
         rootClassLabel.stringValue = "Root Class Name :"
@@ -33,12 +33,12 @@ class SaveAccessoryView :  NSView {
         rootClassLabel.drawsBackground = false
         rootClassLabel.editable = false
         rootClassLabel.selectable = false
-        rootClassLabel.alignment = .RightTextAlignment
+        rootClassLabel.alignment = .Right
         
         
         self.classPrefixField = NSTextField(frame: NSMakeRect(117, 30, 150, 21))
-        (self.classPrefixField.cell() as! NSTextFieldCell).placeholderString = "CP"
-        (self.classPrefixField.cell() as! NSTextFieldCell).stringValue = ""
+        (self.classPrefixField.cell as! NSTextFieldCell).placeholderString = "CP"
+        (self.classPrefixField.cell as! NSTextFieldCell).stringValue = ""
         
         let classPrefixLabel = NSTextField(frame: NSMakeRect(0, 32, 115, 17))
         classPrefixLabel.stringValue = "Class Prefix :"
@@ -46,7 +46,7 @@ class SaveAccessoryView :  NSView {
         classPrefixLabel.drawsBackground = false
         classPrefixLabel.editable = false
         classPrefixLabel.selectable = false
-        classPrefixLabel.alignment = .RightTextAlignment
+        classPrefixLabel.alignment = .Right
         
         super.init(frame: frameRect)
         self.useCoreDataButton.target = self
@@ -60,7 +60,7 @@ class SaveAccessoryView :  NSView {
     
     func rootClassName() -> String {
         
-        return (count(self.rootClassNameField.stringValue) == 0) ? "RootClass" : self.rootClassNameField.stringValue
+        return (self.rootClassNameField.stringValue.characters.count == 0) ? "RootClass" : self.rootClassNameField.stringValue
     }
     
     func clasPrefix() -> String {

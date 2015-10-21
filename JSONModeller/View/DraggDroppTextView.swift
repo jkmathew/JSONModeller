@@ -27,12 +27,11 @@ class DraggDroppTextView: NSTextView {
     
     override func performDragOperation(sender: NSDraggingInfo) -> Bool {
         let files: AnyObject? = sender.draggingPasteboard().propertyListForType(NSFilenamesPboardType)
-        
         if let filePaths = files as? NSArray {
             if filePaths.count == 1 {
                 if let fiepath = filePaths.firstObject as? String {
-                    println(fiepath)
-                    let fileExtension = fiepath.pathExtension
+                    Swift.print(fiepath)
+                    let fileExtension = NSURL(fileURLWithPath: fiepath).pathExtension
                     if fileExtension == "json"{
                         let jsonData = NSData(contentsOfFile: fiepath)
                         self.setFormattedJsonWithData(jsonData)
@@ -52,11 +51,23 @@ class DraggDroppTextView: NSTextView {
     func setFormattedJsonWithData(data: NSData?) -> NSError? {
         var error: NSError? = nil
         if let validData = data {
-            let json: AnyObject? = NSJSONSerialization.JSONObjectWithData(validData, options: nil, error: &error)
+            let json: AnyObject?
+            do {
+                json = try NSJSONSerialization.JSONObjectWithData(validData, options: [])
+            } catch let error1 as NSError {
+                error = error1
+                json = nil
+            }
             if (error != nil) {
                 return error;
             }
-            let formattedJSONData = NSJSONSerialization.dataWithJSONObject(json!, options: .PrettyPrinted, error: &error)
+            let formattedJSONData: NSData?
+            do {
+                formattedJSONData = try NSJSONSerialization.dataWithJSONObject(json!, options: .PrettyPrinted)
+            } catch let error1 as NSError {
+                error = error1
+                formattedJSONData = nil
+            }
             if (error != nil) {
                 return error;
             }

@@ -67,40 +67,40 @@ class PropetyCreatorTest: XCTestCase {
         let creator = PropertyInfo()
         var number = NSNumber(bool: true)
         var type = String.fromCString(number.objCType)!
-        print("bool ")
-        println(type)
+        print("bool ", terminator: "")
+        print(type)
         number = NSNumber(booleanLiteral: true)
         type = String.fromCString(number.objCType)!
-        print("booleanLiteral ")
-        println(type)
+        print("booleanLiteral ", terminator: "")
+        print(type)
         number = NSNumber(float: 1.1)
         type = String.fromCString(number.objCType)!
-        print("float ")
-        println(type)
+        print("float ", terminator: "")
+        print(type)
         
         number = NSNumber(floatLiteral: 1.1)
         type = String.fromCString(number.objCType)!
-        print("floatLiteral ")
-        println(type)
+        print("floatLiteral ", terminator: "")
+        print(type)
         
         number = NSNumber(int: 1)
         type = String.fromCString(number.objCType)!
-        print("int ")
-        println(type)
+        print("int ", terminator: "")
+        print(type)
         
         number = NSNumber(integerLiteral: 2)
         type = String.fromCString(number.objCType)!
-        print("integerLiteral ")
-        println(type)
+        print("integerLiteral ", terminator: "")
+        print(type)
         
         number = NSNumber(integer: 1)
         type = String.fromCString(number.objCType)!
-        print("integer ")
-        println(type)
+        print("integer ", terminator: "")
+        print(type)
         
         number = NSNumber(longLong: 1000000000000000000)
         type = String.fromCString(number.objCType)!
-        print("longLong ")
-        println(type)
+        print("longLong ", terminator: "")
+        print(type)
     }
 }

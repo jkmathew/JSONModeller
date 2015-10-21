@@ -75,18 +75,26 @@ class ClassWriter: NSObject {
     }
     
     func replacementFor(items: [String], joiner: String) -> String {
-        let replacementString = items.count > 0 ? "\n" + "\n".join(items) + "\n" : ""
+        let replacementString = items.count > 0 ? "\n" + items.joinWithSeparator("\n") + "\n" : ""
         return replacementString;
     }
     
     func writeContents(fileContents: NSMutableString, inFolder pathToFilder:String, withType type: Filetype) {
-        let filePath = self.pathFor(type, inFolder: pathToFilder)
-        fileContents.writeToFile(filePath, atomically: true, encoding: NSUTF8StringEncoding, error: nil)
+        let fileURL = self.urlFor(type, inFolder: pathToFilder)
+        do {
+            try fileContents.writeToURL(fileURL, atomically: true, encoding: NSUTF8StringEncoding)
+        } catch _ {
+        }
     }
     
     func templateFor(type: Filetype) -> NSMutableString {
         let path = NSBundle.mainBundle().pathForResource(type.rawValue, ofType: "filetemplate")
-        let fileContents = NSMutableString(contentsOfFile: path!)
+        let fileContents: NSMutableString
+        do {
+            fileContents = try NSMutableString(contentsOfFile:path!, encoding: NSUTF8StringEncoding)
+        } catch _ as NSError {
+            fileContents = NSMutableString(string: "")
+        }
         
         let createdOnDateString = NSDateFormatter.localizedStringFromDate(NSDate(), dateStyle: NSDateFormatterStyle.ShortStyle, timeStyle: NSDateFormatterStyle.NoStyle)
         let copyrightYear = self.copyrightYear()
@@ -102,14 +110,15 @@ class ClassWriter: NSObject {
         fileContents.replaceOccurrencesOfString(kAuthorNamePlaceholder, withString: authorName)
         fileContents.replaceOccurrencesOfString(kCompanyNamePlaceholder, withString: companyName)
         
-        return fileContents!
+        return fileContents
     }
     
-    func pathFor(type: Filetype, inFolder pathToFilder: String) -> String {
+    func urlFor(type: Filetype, inFolder pathToFilder: String) -> NSURL {
         let fullClassName = self.fullClassName()
-        let filePath = pathToFilder.stringByAppendingPathComponent(fullClassName).stringByAppendingPathExtension(type.rawValue)
-        println(filePath)
-        return filePath!
+        let directoryURL = NSURL(fileURLWithPath: pathToFilder, isDirectory: true)
+        let fileURL = directoryURL.URLByAppendingPathComponent(fullClassName).URLByAppendingPathExtension(type.rawValue)
+        print(fileURL)
+        return fileURL
     }
     
     
@@ -123,10 +132,7 @@ class ClassWriter: NSObject {
     }
     
     func authorName() -> String {
-        if let autherName = NSFullUserName(){
-            return autherName
-        }
-        return "User_name"
+        return NSFullUserName()
     }
     
     func companyName() -> String {

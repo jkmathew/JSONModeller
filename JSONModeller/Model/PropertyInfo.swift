@@ -58,9 +58,9 @@ class PropertyInfo: NSObject {
     init(key: String, value: AnyObject, owner: String?) {
         super.init()
         self.originalJSONKey = key
-        println("\n\n\n\nkey: \"\(key )\"")
-        println("value: \"\(value )\"")
-        println("value class_getName: \"\(String.fromCString(class_getName(value.classForCoder)) )\" ")
+        print("\n\n\n\nkey: \"\(key )\"")
+        print("value: \"\(value )\"")
+        print("value class_getName: \"\(String.fromCString(class_getName(value.classForCoder)) )\" ")
         
         if let ownerName = owner {
             self.ownerClass = ownerName
@@ -116,9 +116,9 @@ class PropertyInfo: NSObject {
         // Make each alphabet whith leading non alphabet to upercase
         let capitalizedMutableString = NSMutableString(string: string)
         
-        let regEx = NSRegularExpression(pattern: "[^a-zA-Z][a-zA-Z]", options: nil, error: nil)
-        regEx?.enumerateMatchesInString(string, options: nil, range: string.range(), usingBlock: { (checkingResult, flags, stop) in
-            var replacingRange = checkingResult.range
+        let regEx = try? NSRegularExpression(pattern: "[^a-zA-Z][a-zA-Z]", options: [])
+        regEx?.enumerateMatchesInString(string, options: [], range: string.range(), usingBlock: { (checkingResult, flags, stop) in
+            var replacingRange = checkingResult!.range
             replacingRange.location += 1
             replacingRange.length = 1
             let replacingString = string.substring(replacingRange).uppercaseString
@@ -131,13 +131,13 @@ class PropertyInfo: NSObject {
         let filteredComponents = components.filter {
             return !$0.isEmpty
         }
-        var propertyName = "".join(filteredComponents)
+        let propertyName = filteredComponents.joinWithSeparator("")
         
         return propertyName
     }
     
     func numberTypeFrom(number: NSNumber) -> String {
-        println(String.fromCString(number.objCType))
+        print(String.fromCString(number.objCType))
 
         /********************************************************
         Test output added below
