@@ -26,10 +26,7 @@ class PropertyInfo: NSObject {
     
     var propertyDeclaration: String {
         get {
-            let ownership = self.isPrimitiveType ? "assign" : "strong"
-            let pointer = (self.isPrimitiveType || self.type == "id") ? "" : "*"
-            let typeAnnotation = self.isArray ? "<" + self.elementTypeName + ">" : ""
-            return "@property (" + ownership + ", nonatomic) " + self.type + typeAnnotation + " " + pointer + "" + self.propertyName + ";"
+            return "<error>"
         }
     }
     
@@ -57,6 +54,13 @@ class PropertyInfo: NSObject {
     
     override init() {
         
+    }
+    
+    class func info(forType type: Languagetype, key: String, value: AnyObject, owner: String?) -> PropertyInfo {
+        if type == .Swift {
+            return SwiftPropertyInfo(key: key, value: value, owner: owner)
+        }
+        return ObjectiveCPropertyInfo(key: key, value: value, owner: owner)
     }
     
     init(key: String, value: AnyObject, owner: String?) {
@@ -217,5 +221,25 @@ class PropertyInfo: NSObject {
             }
         }
         return "double"
+    }
+}
+
+class ObjectiveCPropertyInfo: PropertyInfo {
+    override var propertyDeclaration: String {
+        get {
+            let ownership = self.isPrimitiveType ? "assign" : "strong"
+            let pointer = (self.isPrimitiveType || self.type == "id") ? "" : "*"
+            let typeAnnotation = self.isArray ? "<" + self.elementTypeName + ">" : ""
+            return "@property (" + ownership + ", nonatomic) " + self.type + typeAnnotation + " " + pointer + "" + self.propertyName + ";"
+        }
+    }
+}
+
+class SwiftPropertyInfo: PropertyInfo {
+    override var propertyDeclaration: String {
+        get {
+            let typeAnnotation = self.isArray ? "[" + self.elementTypeName + "]" : self.type
+            return "var " + self.propertyName  + ": " + typeAnnotation + "?"
+        }
     }
 }

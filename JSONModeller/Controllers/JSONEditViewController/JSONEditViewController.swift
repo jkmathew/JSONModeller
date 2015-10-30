@@ -57,7 +57,7 @@ class JSONEditViewController: NSViewController {
             print("Error: \(error)")
             
             if let dict = anyObj as? NSDictionary {
-                let writer = ClassWriter(writingClassName: writingClassName, forData: dict)
+                let writer =  ClassWriter.writer(forType: .Swift, writingClassName: writingClassName, forData: dict)
                 
                 writer.writeFiles(path)
             }

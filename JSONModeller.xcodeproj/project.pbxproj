@@ -26,6 +26,7 @@
 		4ABA93EB1B17822B00AE844A /* ClassWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA93EA1B17822B00AE844A /* ClassWriter.swift */; };
 		4ABA93EE1B19FA2F00AE844A /* PropertyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA93ED1B19FA2F00AE844A /* PropertyInfo.swift */; };
 		4AD1E59F1B2441E8009AD5B8 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A85D39C1B21F2300043AD5E /* Settings.swift */; };
+		B2AC7E771BE38BB9004EA6EE /* swift.filetemplate in Resources */ = {isa = PBXBuildFile; fileRef = B2AC7E761BE38BB9004EA6EE /* swift.filetemplate */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		4ABA93EA1B17822B00AE844A /* ClassWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassWriter.swift; sourceTree = "<group>"; };
 		4ABA93EC1B18087300AE844A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4ABA93ED1B19FA2F00AE844A /* PropertyInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyInfo.swift; sourceTree = "<group>"; };
+		B2AC7E761BE38BB9004EA6EE /* swift.filetemplate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = swift.filetemplate; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +193,7 @@
 			children = (
 				4ABA93E61B1781CD00AE844A /* h.filetemplate */,
 				4ABA93E71B1781CD00AE844A /* m.filetemplate */,
+				B2AC7E761BE38BB9004EA6EE /* swift.filetemplate */,
 			);
 			path = Templates;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4ABA93BD1B17593000AE844A /* Images.xcassets in Resources */,
+				B2AC7E771BE38BB9004EA6EE /* swift.filetemplate in Resources */,
 				4ABA93E91B1781CD00AE844A /* m.filetemplate in Resources */,
 				4ABA93C01B17593000AE844A /* Main.storyboard in Resources */,
 				4ABA93E81B1781CD00AE844A /* h.filetemplate in Resources */,
