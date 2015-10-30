@@ -15,8 +15,11 @@ class PropertyInfo: NSObject {
     var ownerClass = ""
     var classPrefix = ""
     var type = "id"
+    var elementTypeName = "id"
+    var customElement: AnyObject?
     var propertyName = ""
     var isCustomClass = false
+    var isArray = false
     private var isPrimitiveType = false
     
     private var originalJSONKey: String = ""
@@ -25,7 +28,8 @@ class PropertyInfo: NSObject {
         get {
             let ownership = self.isPrimitiveType ? "assign" : "strong"
             let pointer = (self.isPrimitiveType || self.type == "id") ? "" : "*"
-            return "@property (" + ownership + ", nonatomic) " + self.type + " " + pointer + "" + self.propertyName + ";"
+            let typeAnnotation = self.isArray ? "<" + self.elementTypeName + ">" : ""
+            return "@property (" + ownership + ", nonatomic) " + self.type + typeAnnotation + " " + pointer + "" + self.propertyName + ";"
         }
     }
     
@@ -41,13 +45,13 @@ class PropertyInfo: NSObject {
     
     var forwardClassDeclaration: String {
         get {
-            return "@class " + self.type + ";"
+            return "@class " + self.elementTypeName + ";"
         }
     }
     
     var importStatement: String {
         get {
-            return "#import \"" + self.type + ".h\""
+            return "#import \"" + self.elementTypeName + ".h\""
         }
     }
     
@@ -68,9 +72,26 @@ class PropertyInfo: NSObject {
         self.propertyName = self.propertyNameFrom(key)
         if value.isKindOfClass(NSDictionary) {
             self.isCustomClass = true
+            self.customElement = value
             self.type = self.classPrefix + self.pascalCaseStringFrom(key).capitalizedString
+            self.elementTypeName = self.type
         }
-        else if let number = value as? NSNumber where Settings.sharedInstance().usePrimitiveTypes{
+        else if let array = value as? NSArray {
+            self.isArray = true
+            if (array.count > 0) {
+            let firstObject = array.firstObject!
+                if firstObject.isKindOfClass(NSDictionary) {
+                    self.customElement = firstObject
+                    self.isCustomClass = true
+                    self.elementTypeName =  self.classPrefix + self.pascalCaseStringFrom(key).capitalizedString
+                }
+                else {
+                    self.elementTypeName = String.fromCString(class_getName(firstObject.classForCoder))!
+                }
+            }
+            self.type = String.fromCString(class_getName(value.classForCoder))! //or simply "NSArray"
+        }
+        else if let number = value as? NSNumber where Settings.sharedInstance().usePrimitiveTypes {
             self.type = self.numberTypeFrom(number)
             self.isPrimitiveType = true
         }
@@ -139,6 +160,7 @@ class PropertyInfo: NSObject {
     func numberTypeFrom(number: NSNumber) -> String {
         print(String.fromCString(number.objCType))
 
+        
         /********************************************************
         Test output added below
         
@@ -184,6 +206,7 @@ class PropertyInfo: NSObject {
         value class_getName: "Optional("NSNumber")" 
         Optional("d")
         *********************************************************/
+        
         if let type = String.fromCString(number.objCType) {
             if type.lowercaseString == "q" {
                 return "long long"

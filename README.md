@@ -15,8 +15,9 @@ Support Application for [JSONModel](https://github.com/icanzilb/JSONModel), whic
 
 ### TODO:
 1. Treat array of elements
-2. Syntax highliter for JSON
-3. Directly load json from Webservice
+2. Type annotation for array elements,and nullablity annotations
+3. Syntax highliter for JSON
+4. Directly load json from Webservice
 
 
 Author: [Johnykutty Mathew](https://in.linkedin.com/in/johnykutty)

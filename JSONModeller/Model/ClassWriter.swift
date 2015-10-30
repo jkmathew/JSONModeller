@@ -26,7 +26,7 @@ class ClassWriter: NSObject {
         dateFormatter.locale = NSLocale.systemLocale()
     }
     
-    init(writingClassName:String,forData:NSDictionary) {
+    init(writingClassName:String, forData:NSDictionary) {
         self.writingClassName = writingClassName.isEmpty ? "MyModel" : writingClassName
         self.writingClassPrefix = ""
         self.writingClassData = forData
@@ -47,8 +47,7 @@ class ClassWriter: NSObject {
             if info.isCustomClass {
                 forwardDeclarations.append(info.forwardClassDeclaration)
                 importStatements.append(info.importStatement)
-                
-                let writer = ClassWriter(writingClassName: info.type, forData: value as! NSDictionary)
+                let writer = ClassWriter(writingClassName: info.elementTypeName, forData: info.customElement as! NSDictionary)
                 writer.writeFiles(directory)
             }
             if let map = info.keyMapItem {
