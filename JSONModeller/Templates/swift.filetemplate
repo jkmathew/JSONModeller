@@ -1,11 +1,11 @@
 //
-//  [#ClassName#].m
+//  [#ClassName#].swift
 //  JSON Modeller
 //
 //  Created by [#AuthorName#] on [#CreatedDate#].
 //  Copyright (c) [#CopyrightYear#] [#CompanyName#]. All rights reserved.
 //
-//  Creaated with JSON Modeller
+//  Creaated with JSON Modeller [https://github.com/Johnykutty/JSONModeller]
 
 class [#ClassName#]: JSONModel {
 [#PropertyDeclarations#]

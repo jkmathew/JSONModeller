@@ -14,7 +14,7 @@ enum Filetype : String {
 }
 
 enum Languagetype : Int {
-    case ObjectiveC = 1, Swift = 2
+    case ObjectiveC = 0, Swift = 1
 }
 
 private let dateFormatter = NSDateFormatter()

@@ -30,17 +30,20 @@ class JSONEditViewController: NSViewController {
         openPanel.canCreateDirectories = true
         openPanel.canChooseFiles = false
         openPanel.prompt = "Chose Directory"
-        let saveAccessoryView = SaveAccessoryView(frame: NSMakeRect(0, 0, 300, 100))
+        let saveAccessoryView = SaveAccessoryView(frame: NSMakeRect(0, 0, 400, 125))
         openPanel.accessoryView = saveAccessoryView
         
         openPanel.beginSheetModalForWindow(self.view.window!, completionHandler: { (result: Int) -> Void in
             if result == NSFileHandlingPanelOKButton, let URL = openPanel.URL{
-                self.createFilesFilesFor(saveAccessoryView.rootClassName(), classPrefix:saveAccessoryView.clasPrefix(),useCoreData:false, path:URL.path!)
+                let rootClassName = saveAccessoryView.rootClassName()
+                let classPrefix = saveAccessoryView.clasPrefix()
+                let language = saveAccessoryView.language()
+                self.createFilesFilesFor(rootClassName, classPrefix: classPrefix, useCoreData: false, language: language, path: URL.path!)
             }
         })
     }
     
-    func createFilesFilesFor(writingClassName:String, classPrefix:String, useCoreData:Bool, path:String) {
+    func createFilesFilesFor(writingClassName: String, classPrefix: String, useCoreData: Bool, language: Languagetype, path: String) {
         print(path)
         if let jsonString = jsonTextView.string where jsonString.characters.count > 0 {
             
@@ -57,7 +60,7 @@ class JSONEditViewController: NSViewController {
             print("Error: \(error)")
             
             if let dict = anyObj as? NSDictionary {
-                let writer =  ClassWriter.writer(forType: .Swift, writingClassName: writingClassName, forData: dict)
+                let writer =  ClassWriter.writer(forType: language, writingClassName: writingClassName, forData: dict)
                 
                 writer.writeFiles(path)
             }
