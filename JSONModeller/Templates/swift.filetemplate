@@ -5,7 +5,7 @@
 //  Created by [#AuthorName#] on [#CreatedDate#].
 //  Copyright (c) [#CopyrightYear#] [#CompanyName#]. All rights reserved.
 //
-//  Creaated with JSON Modeller [https://github.com/Johnykutty/JSONModeller]
+//  Created with JSON Modeller [https://github.com/Johnykutty/JSONModeller]
 
 class [#ClassName#]: JSONModel {
 [#PropertyDeclarations#]
