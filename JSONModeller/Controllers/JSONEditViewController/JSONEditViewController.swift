@@ -18,13 +18,13 @@ class JSONEditViewController: NSViewController {
     }
     
     @IBAction func formatJSON(sender: AnyObject) {
-        if let error = self.jsonTextView.formatJson() {
-            print(error, terminator: "")
-        }
+        validateJSON()
     }
     
     @IBAction func generateFiles(sender: AnyObject) {
-        
+        if !validateJSON() {
+            return
+        }
         let openPanel = NSOpenPanel()
         openPanel.canChooseDirectories = true
         openPanel.canCreateDirectories = true
@@ -48,16 +48,14 @@ class JSONEditViewController: NSViewController {
         if let jsonString = jsonTextView.string where jsonString.characters.count > 0 {
             
             let data: NSData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)!
-            var error: NSError?
             
             let anyObj: AnyObject?
             do {
                 anyObj = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0))
-            } catch let error1 as NSError {
-                error = error1
+            } catch let error as NSError {
                 anyObj = nil
+                showError(error)
             }
-            print("Error: \(error)")
             
             if let dict = anyObj as? NSDictionary {
                 let writer =  ClassWriter.writer(forType: language, writingClassName: writingClassName, forData: dict)
@@ -76,5 +74,21 @@ class JSONEditViewController: NSViewController {
         }
     }
     
+    func showError(error: NSError) {
+        print(error, terminator: "")
+        let description = error.localizedDescription
+        let alert = NSAlert()
+        alert.messageText = "Error!"
+        alert.informativeText = description
+        alert.alertStyle = .CriticalAlertStyle
+        alert.runModal()
+    }
     
+    func validateJSON() -> Bool {
+        if let error = self.jsonTextView.formatJson() {
+            showError(error)
+            return false
+        }
+        return true
+    }
 }
