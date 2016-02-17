@@ -16,9 +16,9 @@
 
 +(JSONKeyMapper*)keyMapper
 {
-return [[JSONKeyMapper alloc] initWithDictionary:@{
-[#KeyMapper#]
-}];
+    return [[JSONKeyMapper alloc] initWithDictionary:@{
+        [#KeyMapper#]
+    }];
 }
 
 

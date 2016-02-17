@@ -78,7 +78,7 @@ class ClassWriter: NSObject {
     }
     
     private func replacementFor(items: [String], joiner: String) -> String {
-        let replacementString = items.count > 0 ? "\n" + items.joinWithSeparator("\n") + "\n" : ""
+        let replacementString = items.count > 0 ? "\n" + items.joinWithSeparator(joiner) + "\n" : ""
         return replacementString;
     }
     
@@ -183,12 +183,12 @@ private class ObjectiveCWriter: ClassWriter {
 private class SwiftWriter: ClassWriter {
     override func writeFilesTo(directory directoryPath: String, forwardDeclarations: [String], propertyDeclarations: [String], importStatements: [String], keyMap: [String]) {
         let swiftFileContents = self.templateFor(.Swift)
-
-//        let forwardDeclarationsString = self.replacementFor(forwardDeclarations, joiner: "\n")
-//        swiftFileContents.replaceOccurrencesOfString(kForwardDeclarationsPlaceholder, withString: forwardDeclarationsString)
         
         let propertyDeclarationsString = self.replacementFor(propertyDeclarations, joiner: "\n")
         swiftFileContents.replaceOccurrencesOfString(kPropertyDeclarationsPlaceholder, withString: propertyDeclarationsString)
+
+        let keyMapString = self.replacementFor(keyMap, joiner: "\n,")
+        swiftFileContents.replaceOccurrencesOfString(kKeymapperPlaceholder, withString: keyMapString)
         
         self.writeContents(swiftFileContents, inFolder: directoryPath, withType: .Swift)
         

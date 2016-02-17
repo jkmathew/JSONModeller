@@ -32,11 +32,7 @@ class PropertyInfo: NSObject {
     
     var keyMapItem: String! {
         get {
-            if self.originalJSONKey == self.propertyName {
-                return nil
-            }
-            let item = "@\"" + self.originalJSONKey + "\" : @\"" + self.propertyName + "\""
-            return item
+            return nil
         }
     }
     
@@ -225,6 +221,17 @@ class PropertyInfo: NSObject {
 }
 
 class ObjectiveCPropertyInfo: PropertyInfo {
+    
+    override var keyMapItem: String! {
+        get {
+            if self.originalJSONKey == self.propertyName {
+                return nil
+            }
+            let item = "@\"" + self.originalJSONKey + "\" : @\"" + self.propertyName + "\""
+            return item
+        }
+    }
+    
     override var propertyDeclaration: String {
         get {
             let ownership = self.isPrimitiveType ? "assign" : "strong"
@@ -236,10 +243,29 @@ class ObjectiveCPropertyInfo: PropertyInfo {
 }
 
 class SwiftPropertyInfo: PropertyInfo {
+    
+    static let typeMap = ["NSString" : "String", "id" : "AnyObject", "BOOL" : "bool",]
+    
+    override var keyMapItem: String! {
+        get {
+            if self.originalJSONKey == self.propertyName {
+                return nil
+            }
+            let item = "\"" + self.originalJSONKey + "\" : \"" + self.propertyName + "\""
+            return item
+        }
+    }
+    
     override var propertyDeclaration: String {
         get {
-            let typeAnnotation = self.isArray ? "[" + self.elementTypeName + "]" : self.type
+            let typeAnnotation = self.isArray ? "[" + self.elementTypeName + "]" : self.swiftType()
             return "var " + self.propertyName  + ": " + typeAnnotation + "?"
         }
+    }
+    func swiftType() -> String {
+        if let type = SwiftPropertyInfo.typeMap[self.type] {
+            return type
+        }
+        return "AnyObject"
     }
 }
