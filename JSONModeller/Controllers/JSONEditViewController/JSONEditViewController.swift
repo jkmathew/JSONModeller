@@ -21,6 +21,10 @@ class JSONEditViewController: NSViewController {
         validateJSON()
     }
     
+    @IBAction func compareJSON(sender: AnyObject) {
+        
+    }
+    
     @IBAction func generateFiles(sender: AnyObject) {
         if !validateJSON() {
             return

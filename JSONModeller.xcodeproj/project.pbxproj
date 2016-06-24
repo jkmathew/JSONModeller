@@ -27,6 +27,7 @@
 		4ABA93EE1B19FA2F00AE844A /* PropertyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA93ED1B19FA2F00AE844A /* PropertyInfo.swift */; };
 		4AD1E59F1B2441E8009AD5B8 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A85D39C1B21F2300043AD5E /* Settings.swift */; };
 		B2AC7E771BE38BB9004EA6EE /* swift.filetemplate in Resources */ = {isa = PBXBuildFile; fileRef = B2AC7E761BE38BB9004EA6EE /* swift.filetemplate */; };
+		B2D3F0511C7D77AC004ED50C /* CompareJSONViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D3F0501C7D77AC004ED50C /* CompareJSONViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		4ABA93EC1B18087300AE844A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4ABA93ED1B19FA2F00AE844A /* PropertyInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyInfo.swift; sourceTree = "<group>"; };
 		B2AC7E761BE38BB9004EA6EE /* swift.filetemplate */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = swift.filetemplate; sourceTree = "<group>"; };
+		B2D3F0501C7D77AC004ED50C /* CompareJSONViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompareJSONViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +168,7 @@
 		4ABA93D81B1759DB00AE844A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				B2D3F04F1C7D7788004ED50C /* CompareJSONViewController */,
 				4ABA93E01B175A9600AE844A /* JSONEditViewController */,
 			);
 			path = Controllers;
@@ -196,6 +199,14 @@
 				B2AC7E761BE38BB9004EA6EE /* swift.filetemplate */,
 			);
 			path = Templates;
+			sourceTree = "<group>";
+		};
+		B2D3F04F1C7D7788004ED50C /* CompareJSONViewController */ = {
+			isa = PBXGroup;
+			children = (
+				B2D3F0501C7D77AC004ED50C /* CompareJSONViewController.swift */,
+			);
+			path = CompareJSONViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -312,6 +323,7 @@
 				4ABA93EE1B19FA2F00AE844A /* PropertyInfo.swift in Sources */,
 				4ABA93E21B175A9600AE844A /* JSONEditViewController.swift in Sources */,
 				4ABA93DB1B175A0700AE844A /* Constants.swift in Sources */,
+				B2D3F0511C7D77AC004ED50C /* CompareJSONViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
