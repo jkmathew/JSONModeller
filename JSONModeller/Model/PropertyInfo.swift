@@ -10,7 +10,7 @@ import Cocoa
 
 class PropertyInfo: NSObject {
    
-    private static let unwantedCharacters = NSCharacterSet(charactersInString: "0987654321abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ").invertedSet
+    fileprivate static let unwantedCharacters = CharacterSet(charactersIn: "0987654321abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ").inverted
     
     var ownerClass = ""
     var classPrefix = ""
@@ -20,9 +20,9 @@ class PropertyInfo: NSObject {
     var propertyName = ""
     var isCustomClass = false
     var isArray = false
-    private var isPrimitiveType = false
+    fileprivate var isPrimitiveType = false
     
-    private var originalJSONKey: String = ""
+    fileprivate var originalJSONKey: String = ""
     
     var propertyDeclaration: String {
         get {
@@ -53,7 +53,7 @@ class PropertyInfo: NSObject {
     }
     
     class func info(forType type: Languagetype, key: String, value: AnyObject, owner: String?) -> PropertyInfo {
-        if type == .Swift {
+        if type == .swift {
             return SwiftPropertyInfo(key: key, value: value, owner: owner)
         }
         return ObjectiveCPropertyInfo(key: key, value: value, owner: owner)
@@ -64,43 +64,43 @@ class PropertyInfo: NSObject {
         self.originalJSONKey = key
         print("\n\n\n\nkey: \"\(key )\"")
         print("value: \"\(value )\"")
-        print("value class_getName: \"\(String.fromCString(class_getName(value.classForCoder)) )\" ")
+        print("value class_getName: \"\(String(cString: class_getName(value.classForCoder)) )\" ")
         
         if let ownerName = owner {
             self.ownerClass = ownerName
         }
         self.propertyName = self.propertyNameFrom(key)
-        if value.isKindOfClass(NSDictionary) {
+        if value is NSDictionary {
             self.isCustomClass = true
             self.customElement = value
-            self.type = self.classPrefix + self.pascalCaseStringFrom(key).capitalizedString
+            self.type = self.classPrefix + self.pascalCaseStringFrom(key).capitalized
             self.elementTypeName = self.type
         }
         else if let array = value as? NSArray {
             self.isArray = true
             if (array.count > 0) {
             let firstObject = array.firstObject!
-                if firstObject.isKindOfClass(NSDictionary) {
-                    self.customElement = firstObject
+                if (firstObject as AnyObject) is NSDictionary {
+                    self.customElement = firstObject as AnyObject?
                     self.isCustomClass = true
-                    self.elementTypeName =  self.classPrefix + self.pascalCaseStringFrom(key).capitalizedString
+                    self.elementTypeName =  self.classPrefix + self.pascalCaseStringFrom(key).capitalized
                 }
                 else {
-                    self.elementTypeName = String.fromCString(class_getName(firstObject.classForCoder))!
+                    self.elementTypeName = String(cString: class_getName((firstObject as AnyObject).classForCoder))
                 }
             }
-            self.type = String.fromCString(class_getName(value.classForCoder))! //or simply "NSArray"
+            self.type = String(cString: class_getName(value.classForCoder)) //or simply "NSArray"
         }
-        else if let number = value as? NSNumber where Settings.sharedInstance().usePrimitiveTypes {
+        else if let number = value as? NSNumber, Settings.shared.usePrimitiveTypes {
             self.type = self.numberTypeFrom(number)
             self.isPrimitiveType = true
         }
-        else if let type = String.fromCString(class_getName(value.classForCoder)) {
+        else if let type = String(validatingUTF8: class_getName(value.classForCoder)) {
             self.type = type
         }
     }
     
-    func propertyNameFrom(key: String) -> String {
+    func propertyNameFrom(_ key: String) -> String {
 
         var propertyName = self.pascalCaseStringFrom(key)
 
@@ -109,7 +109,7 @@ class PropertyInfo: NSObject {
             propertyName = "_Item_"
         }
         // If the propertyname is description make it to classNameDescription format
-        else if propertyName.lowercaseString == "description" {
+        else if propertyName.lowercased() == "description" {
             if self.ownerClass.isEmpty {
                 propertyName = "objectDescription"
             }
@@ -118,11 +118,11 @@ class PropertyInfo: NSObject {
             }
         }
         // If the propertyname is id make it to classID format
-        else if propertyName.lowercaseString == "id" {
+        else if propertyName.lowercased() == "id" {
             propertyName = self.ownerClass.firstLetterLoweredString() + "ID"
         }
         // If starts with digit or property name is any property of NSObject adding a leading _(underscore)
-        else if propertyName.startsWithDigit() || NSObject.instancesRespondToSelector(Selector(propertyName)) {
+        else if propertyName.startsWithDigit() || NSObject.instancesRespond(to: Selector(propertyName)) {
             propertyName = "_" + propertyName
         }
         // Finally make first character lowercase
@@ -133,32 +133,32 @@ class PropertyInfo: NSObject {
         return propertyName
     }
     
-    func pascalCaseStringFrom(string: String) -> String {
+    func pascalCaseStringFrom(_ string: String) -> String {
         // Make each alphabet whith leading non alphabet to upercase
         let capitalizedMutableString = NSMutableString(string: string)
         
         let regEx = try? NSRegularExpression(pattern: "[^a-zA-Z][a-zA-Z]", options: [])
-        regEx?.enumerateMatchesInString(string, options: [], range: string.range(), usingBlock: { (checkingResult, flags, stop) in
+        regEx?.enumerateMatches(in: string, options: [], range: string.range(), using: { (checkingResult, flags, stop) in
             var replacingRange = checkingResult!.range
             replacingRange.location += 1
             replacingRange.length = 1
-            let replacingString = string.substring(replacingRange).uppercaseString
-            capitalizedMutableString.replaceCharactersInRange(replacingRange, withString: replacingString)
+            let replacingString = string.substring(replacingRange).uppercased()
+            capitalizedMutableString.replaceCharacters(in: replacingRange, with: replacingString)
         })
         
         let capitalized = capitalizedMutableString as String
         // Extracts only alphabets and digits
-        let components = capitalized.componentsSeparatedByCharactersInSet(PropertyInfo.unwantedCharacters)
+        let components = capitalized.components(separatedBy: PropertyInfo.unwantedCharacters)
         let filteredComponents = components.filter {
             return !$0.isEmpty
         }
-        let propertyName = filteredComponents.joinWithSeparator("")
+        let propertyName = filteredComponents.joined(separator: "")
         
         return propertyName
     }
     
-    func numberTypeFrom(number: NSNumber) -> String {
-        print(String.fromCString(number.objCType))
+    func numberTypeFrom(_ number: NSNumber) -> String {
+        print(String(cString: number.objCType))
 
         
         /********************************************************
@@ -207,12 +207,12 @@ class PropertyInfo: NSObject {
         Optional("d")
         *********************************************************/
         
-        if let type = String.fromCString(number.objCType) {
-            if type.lowercaseString == "q" {
+        if let type = String(validatingUTF8: number.objCType) {
+            if type.lowercased() == "q" {
                 return "long long"
             }
             // Assuming json doesn't have char type, boolean is also getting as 'c' from the above test outputs
-            if type.lowercaseString == "c" {
+            if type.lowercased() == "c" {
                 return "BOOL"
             }
         }

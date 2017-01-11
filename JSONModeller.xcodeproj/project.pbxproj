@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A2079431E2606D80042FA4B /* ClassWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA93EA1B17822B00AE844A /* ClassWriter.swift */; };
 		4A20A8701B1AF97B006B9BFD /* PropetyCreatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A20A86F1B1AF97B006B9BFD /* PropetyCreatorTest.swift */; };
 		4A20A8711B1AFB4B006B9BFD /* PropertyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABA93ED1B19FA2F00AE844A /* PropertyInfo.swift */; };
 		4A20A8741B1F7404006B9BFD /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A20A8721B1F7121006B9BFD /* String+Extension.swift */; };
@@ -255,14 +256,16 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = "Johnykutty Mathew";
 				TargetAttributes = {
 					4ABA93B21B17593000AE844A = {
 						CreatedOnToolsVersion = 6.3;
+						LastSwiftMigration = 0810;
 					};
 					4ABA93C41B17593100AE844A = {
 						CreatedOnToolsVersion = 6.3;
+						LastSwiftMigration = 0810;
 						TestTargetID = 4ABA93B21B17593000AE844A;
 					};
 				};
@@ -332,6 +335,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A85D3A11B2235F60043AD5E /* StringExtensionTests.swift in Sources */,
+				4A2079431E2606D80042FA4B /* ClassWriter.swift in Sources */,
 				4A20A8701B1AF97B006B9BFD /* PropetyCreatorTest.swift in Sources */,
 				4A20A8751B1F7419006B9BFD /* String+Extension.swift in Sources */,
 				4A20A8711B1AFB4B006B9BFD /* PropertyInfo.swift in Sources */,
@@ -374,8 +378,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -419,8 +425,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "-";
@@ -439,6 +447,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Release;
 		};
@@ -451,6 +460,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "johny.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -463,6 +473,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "johny.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -483,6 +494,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "johny.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JSONModeller.app/Contents/MacOS/JSONModeller";
 			};
 			name = Debug;
@@ -500,6 +512,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "johny.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JSONModeller.app/Contents/MacOS/JSONModeller";
 			};
 			name = Release;

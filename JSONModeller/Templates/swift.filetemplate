@@ -11,7 +11,7 @@ class [#ClassName#]: JSONModel {
 [#PropertyDeclarations#]
 
     override class func keyMapper() -> JSONKeyMapper {
-        let dict = [[#KeyMapper#]]
-        return JSONKeyMapper(dictionary: dict)
+            let dict = [[#KeyMapper#]]
+            return JSONKeyMapper(dictionary: dict)
     }
 }

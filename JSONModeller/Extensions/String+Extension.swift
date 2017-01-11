@@ -11,7 +11,7 @@ import Foundation
 extension String {
     func startsWithDigit() -> Bool {
         let regex = try! NSRegularExpression(pattern: "^[0-9].*", options: [])
-        if nil != regex.firstMatchInString(self, options: [], range: self.range()) {
+        if nil != regex.firstMatch(in: self, options: [], range: self.range()) {
             return true
             
         }
@@ -22,7 +22,7 @@ extension String {
         return NSMakeRange(0, self.characters.count)
     }
     
-    func substring(range: NSRange) -> String {
+    func substring(_ range: NSRange) -> String {
         if self.isEmpty {
             return ""
         }
@@ -36,13 +36,13 @@ extension String {
             if self.isEmpty {
                 return ""
             }
-            let subStart = self.startIndex.advancedBy(r.startIndex, limit: self.endIndex)
-            let subEnd = subStart.advancedBy(r.endIndex - r.startIndex, limit: self.endIndex)
-            return self.substringWithRange(subStart..<subEnd)
+            let subStart = self.characters.index(self.startIndex, offsetBy: r.lowerBound, limitedBy: self.endIndex)
+            let subEnd = self.index (subStart!, offsetBy: r.upperBound - r.lowerBound, limitedBy: self.endIndex)
+            return self.substring(with: subStart!..<subEnd!)
         }
     }
     
-    func substring(from from: Int) -> String {
+    func substring(from: Int) -> String {
         if self.isEmpty {
             return ""
         }
@@ -50,7 +50,7 @@ extension String {
         return self[from..<end]
     }
     
-    func substring(to to: Int) -> String {
+    func substring(to: Int) -> String {
         if self.isEmpty {
             return ""
         }
@@ -58,7 +58,7 @@ extension String {
         return self[from..<to]
     }
     
-    func substring(from: Int, length: Int) -> String {
+    func substring(_ from: Int, length: Int) -> String {
         if self.isEmpty {
             return ""
         }
@@ -70,7 +70,7 @@ extension String {
         if self.isEmpty {
             return ""
         }
-        let lowercase = self.substring(to: 1).lowercaseString
+        let lowercase = self.substring(to: 1).lowercased()
         let value = lowercase + self.substring(from: 1)
         return value
     }

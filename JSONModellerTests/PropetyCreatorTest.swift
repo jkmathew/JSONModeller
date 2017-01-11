@@ -65,41 +65,41 @@ class PropetyCreatorTest: XCTestCase {
     func _testNumberTypes() {
         //just checking
         let creator = PropertyInfo()
-        var number = NSNumber(bool: true)
-        var type = String.fromCString(number.objCType)!
+        var number = NSNumber(value: true as Bool)
+        var type = String(cString: number.objCType)
         print("bool ", terminator: "")
         print(type)
         number = NSNumber(booleanLiteral: true)
-        type = String.fromCString(number.objCType)!
+        type = String(cString: number.objCType)
         print("booleanLiteral ", terminator: "")
         print(type)
-        number = NSNumber(float: 1.1)
-        type = String.fromCString(number.objCType)!
+        number = NSNumber(value: 1.1 as Float)
+        type = String(cString: number.objCType)
         print("float ", terminator: "")
         print(type)
         
         number = NSNumber(floatLiteral: 1.1)
-        type = String.fromCString(number.objCType)!
+        type = String(cString: number.objCType)
         print("floatLiteral ", terminator: "")
         print(type)
         
-        number = NSNumber(int: 1)
-        type = String.fromCString(number.objCType)!
+        number = NSNumber(value: 1 as Int32)
+        type = String(cString: number.objCType)
         print("int ", terminator: "")
         print(type)
         
         number = NSNumber(integerLiteral: 2)
-        type = String.fromCString(number.objCType)!
+        type = String(cString: number.objCType)
         print("integerLiteral ", terminator: "")
         print(type)
         
-        number = NSNumber(integer: 1)
-        type = String.fromCString(number.objCType)!
+        number = NSNumber(value: 1 as Int)
+        type = String(cString: number.objCType)
         print("integer ", terminator: "")
         print(type)
         
-        number = NSNumber(longLong: 1000000000000000000)
-        type = String.fromCString(number.objCType)!
+        number = NSNumber(value: 1000000000000000000 as Int64)
+        type = String(cString: number.objCType)
         print("longLong ", terminator: "")
         print(type)
     }

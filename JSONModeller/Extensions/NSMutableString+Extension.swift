@@ -9,7 +9,7 @@
 import Foundation
 
 extension NSMutableString {
-    func replaceOccurrencesOfString(target: String, withString: String) -> Int {
-        return self.replaceOccurrencesOfString(target, withString:withString, options:NSStringCompareOptions.CaseInsensitiveSearch, range:NSRange(location: 0, length: self.length))
+    func replaceOccurrencesOfString(_ target: String, withString: String) -> Int {
+        return self.replaceOccurrences(of: target, with:withString, options:NSString.CompareOptions.caseInsensitive, range:NSRange(location: 0, length: self.length))
     }
 }

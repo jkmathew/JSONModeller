@@ -14,11 +14,8 @@
 
 @implementation [#ClassName#]
 
-+(JSONKeyMapper*)keyMapper
-{
-    return [[JSONKeyMapper alloc] initWithDictionary:@{
-        [#KeyMapper#]
-    }];
++(JSONKeyMapper*)keyMapper {
+    return [[JSONKeyMapper alloc] initWithDictionary:@{[#KeyMapper#]}];
 }
 
 

@@ -17,15 +17,15 @@ class JSONEditViewController: NSViewController {
         // Do view setup here.
     }
     
-    @IBAction func formatJSON(sender: AnyObject) {
-        validateJSON()
+    @IBAction func formatJSON(_ sender: AnyObject) {
+        _ = validateJSON()
     }
     
-    @IBAction func compareJSON(sender: AnyObject) {
+    @IBAction func compareJSON(_ sender: AnyObject) {
         
     }
     
-    @IBAction func generateFiles(sender: AnyObject) {
+    @IBAction func generateFiles(_ sender: AnyObject) {
         if !validateJSON() {
             return
         }
@@ -37,25 +37,25 @@ class JSONEditViewController: NSViewController {
         let saveAccessoryView = SaveAccessoryView(frame: NSMakeRect(0, 0, 400, 125))
         openPanel.accessoryView = saveAccessoryView
         
-        openPanel.beginSheetModalForWindow(self.view.window!, completionHandler: { (result: Int) -> Void in
-            if result == NSFileHandlingPanelOKButton, let URL = openPanel.URL{
+        openPanel.beginSheetModal(for: self.view.window!, completionHandler: { (result: Int) -> Void in
+            if result == NSFileHandlingPanelOKButton, let URL = openPanel.url{
                 let rootClassName = saveAccessoryView.rootClassName()
                 let classPrefix = saveAccessoryView.clasPrefix()
                 let language = saveAccessoryView.language()
-                self.createFilesFilesFor(rootClassName, classPrefix: classPrefix, useCoreData: false, language: language, path: URL.path!)
+                self.createFilesFilesFor(rootClassName, classPrefix: classPrefix, useCoreData: false, language: language, path: URL.path)
             }
         })
     }
     
-    func createFilesFilesFor(writingClassName: String, classPrefix: String, useCoreData: Bool, language: Languagetype, path: String) {
+    func createFilesFilesFor(_ writingClassName: String, classPrefix: String, useCoreData: Bool, language: Languagetype, path: String) {
         print(path)
-        if let jsonString = jsonTextView.string where jsonString.characters.count > 0 {
+        if let jsonString = jsonTextView.string, jsonString.characters.count > 0 {
             
-            let data: NSData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)!
+            let data: Data = jsonString.data(using: String.Encoding.utf8)!
             
-            let anyObj: AnyObject?
+            let anyObj: Any?
             do {
-                anyObj = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0))
+                anyObj = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions(rawValue: 0))
             } catch let error as NSError {
                 anyObj = nil
                 showError(error)
@@ -71,20 +71,20 @@ class JSONEditViewController: NSViewController {
                 print("Handle array case later")
             }
             
-            let showFolder = NSTask()
+            let showFolder = Process()
             showFolder.launchPath = "/usr/bin/open"
             showFolder.arguments = [path]
             showFolder.launch()
         }
     }
     
-    func showError(error: NSError) {
+    func showError(_ error: NSError) {
         print(error, terminator: "")
         let description = error.localizedDescription
         let alert = NSAlert()
         alert.messageText = "Error!"
         alert.informativeText = description
-        alert.alertStyle = .CriticalAlertStyle
+        alert.alertStyle = .critical
         alert.runModal()
     }
     

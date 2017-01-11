@@ -10,10 +10,10 @@ import Cocoa
 
 class SaveAccessoryView :  NSView {
 
-    private var useCoreDataButton: NSButton
-    private var rootClassNameField: NSTextField
-    private var classPrefixField: NSTextField
-    private var languageSelector: NSPopUpButton
+    fileprivate var useCoreDataButton: NSButton
+    fileprivate var rootClassNameField: NSTextField
+    fileprivate var classPrefixField: NSTextField
+    fileprivate var languageSelector: NSPopUpButton
     override init(frame frameRect: NSRect) {
         
         var y: CGFloat = 0.0
@@ -21,23 +21,23 @@ class SaveAccessoryView :  NSView {
         let fieldX: CGFloat = 117.0
         
         self.useCoreDataButton = NSButton(frame: NSMakeRect(fieldX, y, 350.0, 22.0))
-        self.useCoreDataButton.setButtonType(.SwitchButton)
-        self.useCoreDataButton.bezelStyle = .SmallSquareBezelStyle
+        self.useCoreDataButton.setButtonType(.switch)
+        self.useCoreDataButton.bezelStyle = .smallSquare
         self.useCoreDataButton.title = "Use core data - (currently unavailable)"
-        self.useCoreDataButton.enabled = false
+        self.useCoreDataButton.isEnabled = false
        
         y += 30.0
         self.languageSelector = NSPopUpButton(frame: NSMakeRect(fieldX, y, 150, 25))
-        self.languageSelector.addItemsWithTitles(["Objective C", "Swift"])
+        self.languageSelector.addItems(withTitles: ["Objective C", "Swift"])
         
         y += 5.0
         let languageLabel = NSTextField(frame: NSMakeRect(labelX, y, 115, 17))
         languageLabel.stringValue = "Language :"
-        languageLabel.bezeled = false
+        languageLabel.isBezeled = false
         languageLabel.drawsBackground = false
-        languageLabel.editable = false
-        languageLabel.selectable = false
-        languageLabel.alignment = .Right
+        languageLabel.isEditable = false
+        languageLabel.isSelectable = false
+        languageLabel.alignment = .right
         
         y += 30.0
         self.classPrefixField = NSTextField(frame: NSMakeRect(fieldX, y, 150, 21))
@@ -47,11 +47,11 @@ class SaveAccessoryView :  NSView {
         y += 3.0
         let classPrefixLabel = NSTextField(frame: NSMakeRect(labelX, y, 115, 17))
         classPrefixLabel.stringValue = "Class Prefix :"
-        classPrefixLabel.bezeled = false
+        classPrefixLabel.isBezeled = false
         classPrefixLabel.drawsBackground = false
-        classPrefixLabel.editable = false
-        classPrefixLabel.selectable = false
-        classPrefixLabel.alignment = .Right
+        classPrefixLabel.isEditable = false
+        classPrefixLabel.isSelectable = false
+        classPrefixLabel.alignment = .right
         
         y += 30.0
         self.rootClassNameField = NSTextField(frame: NSMakeRect(fieldX, y, 150, 21))
@@ -61,11 +61,11 @@ class SaveAccessoryView :  NSView {
         y += 3.0
         let rootClassLabel = NSTextField(frame: NSMakeRect(labelX, y, 115, 17))
         rootClassLabel.stringValue = "Root Class Name :"
-        rootClassLabel.bezeled = false
+        rootClassLabel.isBezeled = false
         rootClassLabel.drawsBackground = false
-        rootClassLabel.editable = false
-        rootClassLabel.selectable = false
-        rootClassLabel.alignment = .Right
+        rootClassLabel.isEditable = false
+        rootClassLabel.isSelectable = false
+        rootClassLabel.alignment = .right
         
         super.init(frame: frameRect)
         self.useCoreDataButton.target = self
@@ -99,8 +99,8 @@ class SaveAccessoryView :  NSView {
 
     
     
-    override func drawRect(dirtyRect: NSRect) {
-        super.drawRect(dirtyRect)
+    override func draw(_ dirtyRect: NSRect) {
+        super.draw(dirtyRect)
 
         // Drawing code here.
     }

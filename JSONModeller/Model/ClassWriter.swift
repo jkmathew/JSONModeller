@@ -13,11 +13,11 @@ enum Filetype : String {
     case ObjectiveC_H = "h", ObjectiveC_M = "m", Swift = "swift"
 }
 
-enum Languagetype : Int {
-    case ObjectiveC = 0, Swift = 1
+public enum Languagetype : Int {
+    case objectiveC = 0, swift = 1
 }
 
-private let dateFormatter = NSDateFormatter()
+private let dateFormatter = DateFormatter()
 
 class ClassWriter: NSObject {
     var writingClassName: String
@@ -27,11 +27,11 @@ class ClassWriter: NSObject {
     
     override class func initialize () {
         dateFormatter.dateFormat = "yyyy"
-        dateFormatter.locale = NSLocale.systemLocale()
+        dateFormatter.locale = Locale.current
     }
     
     class func writer(forType type:Languagetype, writingClassName: String, forData: NSDictionary) -> ClassWriter {
-        if type == .Swift {
+        if type == .swift {
             return SwiftWriter(writingClassName: writingClassName, forData: forData)
         }
         return ObjectiveCWriter(writingClassName: writingClassName, forData: forData)
@@ -44,19 +44,19 @@ class ClassWriter: NSObject {
     }
     
     //MARK: File operations
-    func writeFiles(directory:String) {
+    func writeFiles(_ directory:String) {
         
         var propertyDeclarations = [String]()
         var forwardDeclarations = [String]()
         var importStatements = [String]()
         var keyMap = [String]()
         for (key, value) in self.writingClassData {
-            let info = propertyInfo(forKey: key as! String, value: value, owner: self.writingClassName)
+            let info = propertyInfo(forKey: key as! String, value: value as AnyObject, owner: self.writingClassName)
             if info.isCustomClass {
                 forwardDeclarations.append(info.forwardClassDeclaration)
                 importStatements.append(info.importStatement)
 
-                let writer = self.dynamicType.init(writingClassName: info.elementTypeName, forData: info.customElement as! NSDictionary)
+                let writer = type(of: self).init(writingClassName: info.elementTypeName, forData: info.customElement as! NSDictionary)
                 writer.writeFiles(directory)
             }
             if let map = info.keyMapItem {
@@ -69,37 +69,37 @@ class ClassWriter: NSObject {
         
     }
     
-    private func propertyInfo(forKey key: String,  value: AnyObject, owner: String?) -> PropertyInfo {
+    fileprivate func propertyInfo(forKey key: String,  value: AnyObject, owner: String?) -> PropertyInfo {
         fatalError("implement in subclass")
     }
     
-    private func writeFilesTo(directory directoryPath: String, forwardDeclarations: [String], propertyDeclarations: [String], importStatements: [String], keyMap: [String]) {
+    fileprivate func writeFilesTo(directory directoryPath: String, forwardDeclarations: [String], propertyDeclarations: [String], importStatements: [String], keyMap: [String]) {
         fatalError("implement in subclass")
     }
     
-    private func replacementFor(items: [String], joiner: String) -> String {
-        let replacementString = items.count > 0 ? "\n" + items.joinWithSeparator(joiner) + "\n" : ""
+    fileprivate func replacementFor(_ items: [String], joiner: String) -> String {
+        let replacementString = items.count > 0 ? "\n" + items.joined(separator: joiner) + "\n" : ""
         return replacementString;
     }
     
-    private func writeContents(fileContents: NSMutableString, inFolder pathToFilder:String, withType type: Filetype) {
+    fileprivate func writeContents(_ fileContents: NSMutableString, inFolder pathToFilder:String, withType type: Filetype) {
         let fileURL = self.urlFor(type, inFolder: pathToFilder)
         do {
-            try fileContents.writeToURL(fileURL, atomically: true, encoding: NSUTF8StringEncoding)
+            try fileContents.write(to: fileURL, atomically: true, encoding: String.Encoding.utf8.rawValue)
         } catch _ {
         }
     }
     
-    private func templateFor(type: Filetype) -> NSMutableString {
-        let path = NSBundle.mainBundle().pathForResource(type.rawValue, ofType: "filetemplate")
+    fileprivate func templateFor(_ type: Filetype) -> NSMutableString {
+        let path = Bundle.main.path(forResource: type.rawValue, ofType: "filetemplate")
         let fileContents: NSMutableString
         do {
-            fileContents = try NSMutableString(contentsOfFile:path!, encoding: NSUTF8StringEncoding)
+            fileContents = try NSMutableString(contentsOfFile:path!, encoding: String.Encoding.utf8.rawValue)
         } catch _ as NSError {
             fileContents = NSMutableString(string: "")
         }
         
-        let createdOnDateString = NSDateFormatter.localizedStringFromDate(NSDate(), dateStyle: NSDateFormatterStyle.ShortStyle, timeStyle: NSDateFormatterStyle.NoStyle)
+        let createdOnDateString = DateFormatter.localizedString(from: Date(), dateStyle: DateFormatter.Style.short, timeStyle: DateFormatter.Style.none)
         let copyrightYear = self.copyrightYear()
 
         let authorName = self.authorName()
@@ -107,41 +107,41 @@ class ClassWriter: NSObject {
         
         let fullClassName = self.fullClassName()
         
-        fileContents.replaceOccurrencesOfString(kClassNamePlaceholder, withString: fullClassName)
-        fileContents.replaceOccurrencesOfString(kCreatedDatePlaceholder, withString: createdOnDateString)
-        fileContents.replaceOccurrencesOfString(kCopyrightYearPlaceholder, withString: copyrightYear)
-        fileContents.replaceOccurrencesOfString(kAuthorNamePlaceholder, withString: authorName)
-        fileContents.replaceOccurrencesOfString(kCompanyNamePlaceholder, withString: companyName)
+        _ = fileContents.replaceOccurrencesOfString(kClassNamePlaceholder, withString: fullClassName)
+        _ = fileContents.replaceOccurrencesOfString(kCreatedDatePlaceholder, withString: createdOnDateString)
+        _ = fileContents.replaceOccurrencesOfString(kCopyrightYearPlaceholder, withString: copyrightYear)
+        _ = fileContents.replaceOccurrencesOfString(kAuthorNamePlaceholder, withString: authorName)
+        _ = fileContents.replaceOccurrencesOfString(kCompanyNamePlaceholder, withString: companyName)
         
         return fileContents
     }
     
-    private func urlFor(type: Filetype, inFolder pathToFilder: String) -> NSURL {
+    fileprivate func urlFor(_ type: Filetype, inFolder pathToFilder: String) -> URL {
         let fullClassName = self.fullClassName()
-        let directoryURL = NSURL(fileURLWithPath: pathToFilder, isDirectory: true)
-        let fileURL = directoryURL.URLByAppendingPathComponent(fullClassName).URLByAppendingPathExtension(type.rawValue)
+        let directoryURL = URL(fileURLWithPath: pathToFilder, isDirectory: true)
+        let fileURL = directoryURL.appendingPathComponent(fullClassName).appendingPathExtension(type.rawValue)
         print(fileURL)
         return fileURL
     }
     
     
     //MARK: Getters
-    private func fullClassName() -> String {
+    fileprivate func fullClassName() -> String {
         return self.writingClassPrefix + self.writingClassName
     }
     
-    private func copyrightYear() -> String {
-        return dateFormatter.stringFromDate(NSDate())
+    fileprivate func copyrightYear() -> String {
+        return dateFormatter.string(from: Date())
     }
     
-    private func authorName() -> String {
+    fileprivate func authorName() -> String {
         return NSFullUserName()
     }
     
-    private func companyName() -> String {
-        let person = ABAddressBook.sharedAddressBook().me()
+    fileprivate func companyName() -> String {
+        let person = ABAddressBook.shared().me()
         if let me = person {
-            if let company = me.valueForProperty(kABOrganizationProperty) as? String {
+            if let company = me.value(forProperty: kABOrganizationProperty) as? String {
                 return company
             }
         }
@@ -159,24 +159,24 @@ private class ObjectiveCWriter: ClassWriter {
         let mFileContents = self.templateFor(.ObjectiveC_M)
         
         let forwardDeclarationsString = self.replacementFor(forwardDeclarations, joiner: "\n")
-        hFileContents.replaceOccurrencesOfString(kForwardDeclarationsPlaceholder, withString: forwardDeclarationsString)
+        _ = hFileContents.replaceOccurrencesOfString(kForwardDeclarationsPlaceholder, withString: forwardDeclarationsString)
         
         let propertyDeclarationsString = self.replacementFor(propertyDeclarations, joiner: "\n")
-        hFileContents.replaceOccurrencesOfString(kPropertyDeclarationsPlaceholder, withString: propertyDeclarationsString)
+        _ = hFileContents.replaceOccurrencesOfString(kPropertyDeclarationsPlaceholder, withString: propertyDeclarationsString)
         
         let importStatementsString = self.replacementFor(importStatements, joiner: "\n")
-        mFileContents.replaceOccurrencesOfString(kImportsPlaceholder, withString: importStatementsString)
+        _ = mFileContents.replaceOccurrencesOfString(kImportsPlaceholder, withString: importStatementsString)
         
         let keyMapString = self.replacementFor(keyMap, joiner: ",\n")
-        mFileContents.replaceOccurrencesOfString(kKeymapperPlaceholder, withString: keyMapString)
+        _ = mFileContents.replaceOccurrencesOfString(kKeymapperPlaceholder, withString: keyMapString)
         
         
         self.writeContents(hFileContents, inFolder: directoryPath, withType: .ObjectiveC_H)
         self.writeContents(mFileContents, inFolder: directoryPath, withType: .ObjectiveC_M)
     }
     
-    private override func propertyInfo(forKey key: String,  value: AnyObject, owner: String?) -> PropertyInfo {
-        return PropertyInfo.info(forType: .ObjectiveC, key: key, value: value, owner: owner)
+    fileprivate override func propertyInfo(forKey key: String,  value: AnyObject, owner: String?) -> PropertyInfo {
+        return PropertyInfo.info(forType: .objectiveC, key: key, value: value, owner: owner)
     }
 }
 
@@ -185,16 +185,16 @@ private class SwiftWriter: ClassWriter {
         let swiftFileContents = self.templateFor(.Swift)
         
         let propertyDeclarationsString = self.replacementFor(propertyDeclarations, joiner: "\n")
-        swiftFileContents.replaceOccurrencesOfString(kPropertyDeclarationsPlaceholder, withString: propertyDeclarationsString)
+        _ = swiftFileContents.replaceOccurrencesOfString(kPropertyDeclarationsPlaceholder, withString: propertyDeclarationsString)
 
-        let keyMapString = self.replacementFor(keyMap, joiner: "\n,")
-        swiftFileContents.replaceOccurrencesOfString(kKeymapperPlaceholder, withString: keyMapString)
+        let keyMapString = self.replacementFor(keyMap, joiner: ",\n")
+        _ = swiftFileContents.replaceOccurrencesOfString(kKeymapperPlaceholder, withString: keyMapString)
         
-        self.writeContents(swiftFileContents, inFolder: directoryPath, withType: .Swift)
+        _ = self.writeContents(swiftFileContents, inFolder: directoryPath, withType: .Swift)
         
     }
     
-    private override func propertyInfo(forKey key: String,  value: AnyObject, owner: String?) -> PropertyInfo {
-        return PropertyInfo.info(forType: .Swift, key: key, value: value, owner: owner)
+    fileprivate override func propertyInfo(forKey key: String,  value: AnyObject, owner: String?) -> PropertyInfo {
+        return PropertyInfo.info(forType: .swift, key: key, value: value, owner: owner)
     }
 }
